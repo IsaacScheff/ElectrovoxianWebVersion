@@ -25,11 +25,11 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: 'src/index.html' // Path to your HTML template
+            template: 'src/index.html' // Path to HTML template
         }),
         new CopyPlugin({
             patterns: [
-                { from: 'src/assets', to: 'assets' } // Adjust as necessary
+                { from: 'src/assets', to: 'assets' } 
             ],
         }),
     ],
