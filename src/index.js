@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
+import MainScene from './MainScene';
 
 const config = {
     type: Phaser.AUTO,
@@ -22,9 +23,7 @@ const config = {
             }
         ]
     },
-    scene: {
-        // Define Phaser scenes: preload, create, update
-    }
+    scene: [MainScene]
 };
 
 new Phaser.Game(config);
