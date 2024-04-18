@@ -21,7 +21,7 @@ export default class MainScene extends Phaser.Scene {
         const layer1 = map.createLayer('Tile Layer 1', tileset, 0, 0);
         const layer2 = map.createLayer('Tile Layer 2', tileset, 0, 0);
 
-        this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovox' });
+        this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovoxPlayerRed' });
         this.player.scaleX = 2;
         this.player.scaleY = 2;
         this.player.inputKeys = this.input.keyboard.addKeys({

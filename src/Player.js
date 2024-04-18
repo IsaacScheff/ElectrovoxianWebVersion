@@ -24,7 +24,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     static preload(scene) {
-        scene.load.image('electrovox', 'assets/images/electrovox.png');
+        scene.load.image('electrovoxPlayerRed', 'assets/images/ElectrovoxPlayerRed.png');
     }
 
     update() {
