@@ -3,6 +3,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         let { scene, x, y, texture } = data;
         super(scene.matter.world, x, y, texture);
         this.scene.add.existing(this);
+        this.team = 'red'; //maybe later allow for blue team player
 
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         var playerCollider = Bodies.circle(this.x, this.y, 20, { isSensor: false, label: 'playerCollider' });
@@ -13,6 +14,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         });
         this.setExistingBody(compoundBody);
         this.setFixedRotation();
+
+        this.body.parts.forEach(part => part.gameObject = this);
     }
 
     static preload(scene) {
@@ -21,7 +24,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     update() {
         //const speed = 2.5;
-        const speed = 35; //for zooming around the map to test
+        const speed = 25; //for zooming around the map to test
         let playerVelocity = new Phaser.Math.Vector2();
         if(this.inputKeys.left.isDown) {
             playerVelocity.x = -1;
@@ -36,5 +39,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         playerVelocity.normalize();
         playerVelocity.scale(speed);
         this.setVelocity(playerVelocity.x, playerVelocity.y);
+        this.body.position.x = this.x;
+        this.body.position.y = this.y;
     }
 }
