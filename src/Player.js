@@ -20,7 +20,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     update() {
-        const speed = 2.5;
+        //const speed = 2.5;
+        const speed = 35; //for zooming around the map to test
         let playerVelocity = new Phaser.Math.Vector2();
         if(this.inputKeys.left.isDown) {
             playerVelocity.x = -1;
