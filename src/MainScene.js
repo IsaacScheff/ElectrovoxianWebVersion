@@ -1,3 +1,5 @@
+import Electrovox from "./Electrovox.js";
+import ElectrovoxSpawner from "./ElectrovoxSpawner.js";
 import Player from "./Player.js";
 import Turret from "./Turret.js";
 
@@ -9,6 +11,7 @@ export default class MainScene extends Phaser.Scene {
     preload() {
         Player.preload(this);
         Turret.preload(this);
+        Electrovox.preload(this);
         this.load.image('tiles', 'assets/images/RPG Nature Tileset.png');
         this.load.tilemapTiledJSON('map', 'assets/images/map.json');
 
@@ -72,9 +75,13 @@ export default class MainScene extends Phaser.Scene {
             this.blueTeamTurrets.push(turret);  
         });
 
+        this.electrovoxSpawner = new ElectrovoxSpawner(this);
+        this.electrovoxSpawner.spawnMinions();
+
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.1, 0.1);
         this.cameras.main.setBounds(0, 0, 2048, 2048);
+
     }
 
     update() {
