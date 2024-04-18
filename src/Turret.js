@@ -43,6 +43,7 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
                 if (body.gameObject && body.gameObject.team && this.team !== body.gameObject.team) {
                     console.log(`Turret on team ${this.team} has detected an enemy from team ${body.gameObject.team}`);
                     this.lastDetectionTime = now;
+                    body.gameObject.takeDamage(10);  //TODO: make a shoot function and lazer object
                     break;  // Exit the loop after the first detection
                 }
             }

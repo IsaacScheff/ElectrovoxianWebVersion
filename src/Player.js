@@ -16,6 +16,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.setFixedRotation();
 
         this.body.parts.forEach(part => part.gameObject = this);
+
+        this.maxHealth = 100;
+        this.currentHealth = this.maxHealth;
+        this.healthBar = this.scene.add.graphics();
+        this.updateHealthBar();
     }
 
     static preload(scene) {
@@ -41,5 +46,29 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.setVelocity(playerVelocity.x, playerVelocity.y);
         this.body.position.x = this.x;
         this.body.position.y = this.y;
+
+        this.updateHealthBar();
+    }
+
+    updateHealthBar() {
+        this.healthBar.clear();
+        this.healthBar.setPosition(this.x - 30, this.y - 40);
+
+        this.healthBar.fillStyle(0x808080, 1);
+        this.healthBar.fillRect(0, 0, 60, 10);
+
+        this.healthBar.fillStyle(0xff0000, 1);
+        this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
+    }
+
+    takeDamage(amount) {
+        this.currentHealth -= amount;
+        this.currentHealth = Math.max(0, this.currentHealth);
+        this.updateHealthBar();
+
+  
+        // if (this.currentHealth <= 0) {
+        //     this.die();
+        // }
     }
 }
