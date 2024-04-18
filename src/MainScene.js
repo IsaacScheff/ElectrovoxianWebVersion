@@ -16,7 +16,8 @@ export default class MainScene extends Phaser.Scene {
         const map = this.make.tilemap({ key: 'map' });
         const tileset = map.addTilesetImage('RPG Nature Tileset', 'tiles', 32, 32);
         const layer1 = map.createLayer('Tile Layer 1', tileset, 0, 0);
-        this.player = new Player({ scene:this, x:0, y:0, texture:'electrovox' });
+
+        this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovox' });
         this.player.scaleX = 2;
         this.player.scaleY = 2;
         this.player.inputKeys = this.input.keyboard.addKeys({
@@ -25,6 +26,10 @@ export default class MainScene extends Phaser.Scene {
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
         });
+
+        this.cameras.main.startFollow(this.player, true);
+        this.cameras.main.setLerp(0.1, 0.1);
+        this.cameras.main.setBounds(0, 0, 2048, 2048);
     }
 
     update() {
