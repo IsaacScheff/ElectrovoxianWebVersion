@@ -75,6 +75,7 @@ export default class MainScene extends Phaser.Scene {
             this.blueTeamTurrets.push(turret);  
         });
 
+        this.electrovoxi = [];
         this.electrovoxSpawner = new ElectrovoxSpawner(this);
         this.electrovoxSpawner.spawnMinions();
 
@@ -84,7 +85,12 @@ export default class MainScene extends Phaser.Scene {
 
     }
 
-    update() {
+    update(time, delta) {
         this.player.update();
+        this.electrovoxi.forEach(minion => {
+            if (minion.active) {  // Check if the minion is still active
+                minion.update(time, delta);  // Call the update method of each minion
+            }
+        });
     }
 }
