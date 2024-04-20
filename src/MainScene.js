@@ -77,7 +77,7 @@ export default class MainScene extends Phaser.Scene {
 
         this.electrovoxi = [];
         this.electrovoxSpawner = new ElectrovoxSpawner(this);
-        this.electrovoxSpawner.spawnMinions();
+        this.electrovoxSpawner.spawnBoth();
 
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.1, 0.1);

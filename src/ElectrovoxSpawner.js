@@ -5,26 +5,32 @@ export default class ElectrovoxSpawner {
         this.scene = scene;
         this.spawnInterval = 20000; // 20 seconds
         this.redTeamSpawns = [
-            {x: 64, y: 1568, waypoints: [ {x:64, y:208}  ]}, 
-            {x: 320, y: 1600, waypoints: [{x: 1024, y: 1024}    ]}, 
-            {x: 416, y: 2016, waypoints: [{x: 1984, y: 2016}    ]}
+            {x: 64, y: 1568, waypoints: [ {x:64, y:208}]}, 
+            {x: 320, y: 1600, waypoints: [{x: 1024, y: 1024}]}, 
+            {x: 416, y: 2016, waypoints: [{x: 1984, y: 2016}]}
         ]
-        // this.blueTeamSpawns = [
-        //     {x: y: },
-        //     {x: y: },
-        //     {x: y: }
-        // ]
+        this.blueTeamSpawns = [
+            {x: 2016, y: 416, waypoints: [{x: 1984, y: 2016}]},
+            {x: 1600, y: 320, waypoints: [{x: 1024, y: 1024}]}, 
+            {x: 1568, y: 32, waypoints: [{x:64, y:32}]}
+        ]
 
         this.scene.time.addEvent({
             delay: this.spawnInterval,
-            callback: this.spawnMinions,
+            callback: this.spawnBoth,
             callbackScope: this,
             loop: true
         });
     }
 
-    spawnMinions() {
-        this.redTeamSpawns.forEach((spawn, index) => {
+    spawnBoth(){
+        this.spawnMinions('red');
+        this.spawnMinions('blue');
+    }
+
+    spawnMinions(team) { 
+        const teamSpawns = (team == 'red' ? this.redTeamSpawns : this.blueTeamSpawns);
+        teamSpawns.forEach((spawn, index) => {
             for (let i = 0; i < 4; i++) {
                 let xPos, yPos;
     
@@ -48,18 +54,18 @@ export default class ElectrovoxSpawner {
                         break;
                 }
     
-                let redTeamer = new Electrovox({
+                let electrovox = new Electrovox({
                     scene: this.scene,
                     x: xPos,
                     y: yPos,
-                    texture: `electrovoxRedTeam`,
-                    team: 'red',
+                    texture: (team ==  'red' ? `electrovoxRedTeam` : 'electrovoxBlueTeam'),
+                    team: team,
                     waypoints: spawn.waypoints
                 });
-                redTeamer.scaleX = 2;
-                redTeamer.scaleY = 2;
-                redTeamer.setFixedRotation();
-                this.scene.electrovoxi.push(redTeamer);
+                electrovox.scaleX = 2;
+                electrovox.scaleY = 2;
+                electrovox.setFixedRotation();
+                this.scene.electrovoxi.push(electrovox);
             }
         });
     }
