@@ -13,23 +13,54 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
+
+        this.attackRange = 200; // Attack range in pixels
+        this.shootingCooldown = 1500; // Cooldown in milliseconds
+        this.lastShotTime = 0; 
     }
     static preload(scene) {
         scene.load.image('electrovoxRedTeam', 'assets/images/ElectrovoxRedTeam.png');
         scene.load.image('electrovoxBlueTeam', 'assets/images/ElectrovoxBlueTeam.png');
     }
-    update() {
+    update(time, delta) {
         if (!this.active) return;  // Skip updating if not active
 
-        if (this.waypoints && this.currentWaypointIndex < this.waypoints.length) {
-            let target = this.waypoints[this.currentWaypointIndex];
-            let reached = this.moveTo(target);
+        if (!this.detectAndShoot(time)) {
+            // Move towards waypoints if no enemy to shoot
+            if (this.waypoints && this.currentWaypointIndex < this.waypoints.length) {
+                let target = this.waypoints[this.currentWaypointIndex];
+                let reached = this.moveTo(target);
 
-            if (reached) {
-                this.currentWaypointIndex++;
+                if (reached) {
+                    this.currentWaypointIndex++;
+                }
             }
         }
         this.updateHealthBar();
+    }
+    detectAndShoot(currentTime) {
+        const enemies = (this.team === 'red') ? this.scene.blueTeam : this.scene.redTeam;
+        let enemyDetected = false;  // Flag to check if any enemy is detected
+    
+        for (let enemy of enemies) {
+            if (enemy.active && Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y) <= this.attackRange) {
+                enemyDetected = true;  // Enemy is detected within range
+                if (currentTime > this.lastShotTime + this.shootingCooldown) {
+                    this.shootAt(enemy);  // Perform shooting
+                    this.lastShotTime = currentTime;  // Update last shot time
+                    console.log(`Electrovox from ${this.team} shooting at enemy!`);
+                }
+            }
+        }
+    
+        if (enemyDetected) {
+            this.setVelocity(0, 0);  // Stop moving if any enemy is detected
+            return true;  // Indicate that action was taken based on enemy detection
+        }
+        return false;  // No enemy was detected or no action taken
+    }
+    shootAt(enemy) {
+        enemy.takeDamage(20);  // Adjust damage as needed
     }
     moveTo(target) {
         let dx = target.x - this.x;
