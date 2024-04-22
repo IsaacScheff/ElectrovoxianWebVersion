@@ -3,6 +3,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let { scene, x, y, texture, team, lane, waypoints } = data;
         super(scene.matter.world, x, y, texture);
+        this.team = team;
         this.scene.add.existing(this);
         this.waypoints = waypoints;
         this.currentWaypointIndex = 0;
@@ -18,6 +19,8 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         scene.load.image('electrovoxBlueTeam', 'assets/images/ElectrovoxBlueTeam.png');
     }
     update() {
+        if (!this.active) return;  // Skip updating if not active
+
         if (this.waypoints && this.currentWaypointIndex < this.waypoints.length) {
             let target = this.waypoints[this.currentWaypointIndex];
             let reached = this.moveTo(target);
@@ -42,12 +45,16 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         return false; // Target not yet reached
     }
     takeDamage(amount) { 
-        this.health -= amount;
-        if (this.health <= 0) {
+        if (!this.active) return;  // Skip if already destroyed
+        console.log("bam!");
+        this.currentHealth -= amount;
+        if (this.currentHealth <= 0) {
             this.die();
         }
     }
     updateHealthBar() {
+        if (!this.active) return;  // Skip updating the health bar if not active
+
         this.healthBar.clear();
         this.healthBar.setPosition(this.x - 30, this.y - 40);
 
@@ -59,10 +66,16 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
     }
     die() {
         console.log("Minion died.");
-        let index = this.scene.electrovoxes.indexOf(this);
+        let index = this.scene.electrovoxi.indexOf(this);
         if (index !== -1) {
             this.scene.electrovoxi.splice(index, 1);  // Remove from array
         }
+        let teamArray = (this.team === 'red' ? this.scene.redTeam : this.scene.blueTeam);
+        let teamIndex = teamArray.indexOf(this);
+        if (teamIndex !== -1) {
+            teamArray.splice(teamIndex, 1);
+        }
+        this.healthBar.destroy();
         this.destroy();  // Phaser's method to remove the sprite
     }
     

@@ -66,6 +66,7 @@ export default class ElectrovoxSpawner {
                 electrovox.scaleY = 2;
                 electrovox.setFixedRotation();
                 this.scene.electrovoxi.push(electrovox);
+                (team === 'red' ? this.scene.redTeam : this.scene.blueTeam).push(electrovox);
             }
         });
     }

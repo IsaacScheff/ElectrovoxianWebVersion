@@ -24,7 +24,11 @@ export default class MainScene extends Phaser.Scene {
         const layer1 = map.createLayer('Tile Layer 1', tileset, 0, 0);
         const layer2 = map.createLayer('Tile Layer 2', tileset, 0, 0);
 
+        this.redTeam = [];
+        this.blueTeam = [];
+
         this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovoxPlayerRed' });
+        this.redTeam.push(this.player);
         this.player.scaleX = 2;
         this.player.scaleY = 2;
         this.player.inputKeys = this.input.keyboard.addKeys({
@@ -82,7 +86,6 @@ export default class MainScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.1, 0.1);
         this.cameras.main.setBounds(0, 0, 2048, 2048);
-
     }
 
     update(time, delta) {
@@ -91,6 +94,12 @@ export default class MainScene extends Phaser.Scene {
             if (minion.active) {  // Check if the minion is still active
                 minion.update(time, delta);  // Call the update method of each minion
             }
+        });
+        this.redTeamTurrets.forEach(turret => {
+            turret.update(time, delta);
+        });
+        this.blueTeamTurrets.forEach(turret => {
+            turret.update(time, delta);
         });
     }
 }
