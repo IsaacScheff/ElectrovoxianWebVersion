@@ -84,6 +84,9 @@ export default class MainScene extends Phaser.Scene {
         this.electrovoxSpawner = new ElectrovoxSpawner(this);
         this.electrovoxSpawner.spawnBoth();
 
+        this.creeps = [];
+        //creep spawner
+        
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.1, 0.1);
         this.cameras.main.setBounds(0, 0, 2048, 2048);
