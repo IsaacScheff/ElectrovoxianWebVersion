@@ -17,6 +17,8 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.attackRange = 192; // Attack range in pixels
         this.shootingCooldown = 1500; // Cooldown in milliseconds
         this.lastShotTime = 0; 
+
+        this.isHidden = false;
     }
     static preload(scene) {
         scene.load.image('electrovoxRedTeam', 'assets/images/ElectrovoxRedTeam.png');
@@ -37,6 +39,13 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
             }
         }
         this.updateHealthBar();
+
+        let tile = this.scene.map.getTileAtWorldXY(this.x, this.y, true, this.scene.cameras.main, 'Tile Layer 3');
+        if (tile && tile.index !== -1) {  // Check if there is a tile and it is not an empty tile
+            this.hide(true);
+        } else {
+            this.hide(false);
+        }
     }
     detectAndShoot(currentTime) {
         const enemies = (this.team === 'red') ? 
@@ -46,7 +55,11 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         let enemyDetected = false;  // Flag to check if any enemy is detected
     
         for (let enemy of enemies) {
-            if (enemy.active && Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y) <= this.attackRange) {
+            if (
+                enemy.active && 
+                Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y) <= this.attackRange &&
+                (enemy.isHidden === false || enemy.isHidden === true && this.isHidden === true)
+                ) {
                 enemyDetected = true;  // Enemy is detected within range
                 if (currentTime > this.lastShotTime + this.shootingCooldown) {
                     this.shootAt(enemy);  // Perform shooting
@@ -110,6 +123,15 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         }
         this.healthBar.destroy();
         this.destroy();  // Phaser's method to remove the sprite
+    }
+    hide(hideStatus) { //TODO: after jam; more intricate hide mechanic for characters in seperate bushes than the enemies
+        if (hideStatus) {
+            this.isHidden = true;
+            this.setAlpha(0.5);  // Set opacity to 50%
+        } else {
+            this.isHidden = false;
+            this.setAlpha(1.0);  // Set opacity to 100%
+        }
     }
     
 }

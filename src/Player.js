@@ -21,6 +21,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
+
+        this.isHidden = false;
     }
 
     static preload(scene) {
@@ -48,6 +50,13 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.body.position.y = this.y;
 
         this.updateHealthBar();
+
+        let tile = this.scene.map.getTileAtWorldXY(this.x, this.y, true, this.scene.cameras.main, 'Tile Layer 3');
+        if (tile && tile.index !== -1) {  // Check if there is a tile and it is not an empty tile
+            this.hide(true);
+        } else {
+            this.hide(false);
+        }
     }
 
     updateHealthBar() {
@@ -69,5 +78,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         // if (this.currentHealth <= 0) {
         //     this.die();
         // }
+    }
+
+    hide(hideStatus) { //TODO: after jam; more intricate hide mechanic for characters in seperate bushes than the enemies
+        if (hideStatus) {
+            this.isHidden = true;
+            this.setAlpha(0.5);  // Set opacity to 50%
+        } else {
+            this.isHidden = false;
+            this.setAlpha(1.0);  // Set opacity to 100%
+        }
     }
 }
