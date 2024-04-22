@@ -7,7 +7,11 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.waypoints = waypoints;
         this.currentWaypointIndex = 0;
         this.moveSpeed = 2;
-        this.health = 100;
+
+        this.maxHealth = 100;
+        this.currentHealth = this.maxHealth;
+        this.healthBar = this.scene.add.graphics();
+        this.updateHealthBar();
     }
     static preload(scene) {
         scene.load.image('electrovoxRedTeam', 'assets/images/ElectrovoxRedTeam.png');
@@ -22,6 +26,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
                 this.currentWaypointIndex++;
             }
         }
+        this.updateHealthBar();
     }
     moveTo(target) {
         let dx = target.x - this.x;
@@ -42,7 +47,16 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
             this.die();
         }
     }
-    
+    updateHealthBar() {
+        this.healthBar.clear();
+        this.healthBar.setPosition(this.x - 30, this.y - 40);
+
+        this.healthBar.fillStyle(0x808080, 1);
+        this.healthBar.fillRect(0, 0, 60, 10);
+
+        this.healthBar.fillStyle(0xff0000, 1);
+        this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
+    }
     die() {
         console.log("Minion died.");
         let index = this.scene.electrovoxes.indexOf(this);
