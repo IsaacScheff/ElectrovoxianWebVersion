@@ -14,7 +14,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
 
-        this.attackRange = 200; // Attack range in pixels
+        this.attackRange = 192; // Attack range in pixels
         this.shootingCooldown = 1500; // Cooldown in milliseconds
         this.lastShotTime = 0; 
     }
@@ -39,7 +39,10 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.updateHealthBar();
     }
     detectAndShoot(currentTime) {
-        const enemies = (this.team === 'red') ? this.scene.blueTeam : this.scene.redTeam;
+        const enemies = (this.team === 'red') ? 
+                  this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : 
+                  this.scene.redTeam.concat(this.scene.redTeamTurrets);
+        
         let enemyDetected = false;  // Flag to check if any enemy is detected
     
         for (let enemy of enemies) {
@@ -77,7 +80,6 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
     }
     takeDamage(amount) { 
         if (!this.active) return;  // Skip if already destroyed
-        console.log("bam!");
         this.currentHealth -= amount;
         if (this.currentHealth <= 0) {
             this.die();

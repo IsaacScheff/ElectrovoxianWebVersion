@@ -6,9 +6,14 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.team = team;
         this.enemies = [];
 
+        this.maxHealth = 100;
+        this.currentHealth = this.maxHealth;
+        this.healthBar = this.scene.add.graphics();
+        this.updateHealthBar();
+
         // const { Body, Bodies } = Phaser.Physics.Matter.Matter;
         // var turretCollider = Bodies.rectangle(x, y, 32, 64, { isSensor: false, label: 'turretCollider' });
-        this.detectionArea = new Phaser.Geom.Circle(x, y, 164);
+        this.detectionArea = new Phaser.Geom.Circle(x, y, 200);
 
         // const compoundBody = Body.create({
         //     parts: [turretCollider],
@@ -38,6 +43,27 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
                 }
             });
         }
+        this.updateHealthBar();
+    }
+    takeDamage(amount) { 
+        if (!this.active) return;  // Skip if already destroyed
+        console.log("bam!");
+        this.currentHealth -= amount;
+        if (this.currentHealth <= 0) {
+            this.die();
+        }
+    }
+    updateHealthBar() {
+        if (!this.active) return;  // Skip updating the health bar if not active
+
+        this.healthBar.clear();
+        this.healthBar.setPosition(this.x - 30, this.y - 40);
+
+        this.healthBar.fillStyle(0x808080, 1);
+        this.healthBar.fillRect(0, 0, 60, 10);
+
+        this.healthBar.fillStyle(0xff0000, 1);
+        this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
     }
     
     static preload(scene) {
@@ -46,6 +72,16 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
 
     destroy() {
         super.destroy();
+    }
+    die() {
+        console.log("Turret destroyed.");
+        let teamArray = (this.team === 'red' ? this.scene.redTeamTurrets : this.scene.blueTeamTurrets);
+        let teamIndex = teamArray.indexOf(this);
+        if (teamIndex !== -1) {
+            teamArray.splice(teamIndex, 1);
+        }
+        this.healthBar.destroy();
+        this.destroy();  // Phaser's method to remove the sprite
     }
 }
 
