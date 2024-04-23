@@ -83,7 +83,8 @@ export default class MainScene extends Phaser.Scene {
             this.blueTeamTurrets.push(turret);  
         });
 
-        this.harvesters = [];
+        this.redHarvesters = [];
+        this.blueHarvesters = [];
         //this.harvesterSpawner.spawnHarvesters();
 
         this.electrovoxi = [];
