@@ -2,6 +2,8 @@ import Electrovox from "./Electrovox.js";
 import ElectrovoxSpawner from "./ElectrovoxSpawner.js";
 import Player from "./Player.js";
 import Turret from "./Turret.js";
+import JungleCreep from "./JungleCreep.js";
+import CreepSpawner from "./CreepSpawner.js";
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -12,6 +14,7 @@ export default class MainScene extends Phaser.Scene {
         Player.preload(this);
         Turret.preload(this);
         Electrovox.preload(this);
+        JungleCreep.preload(this);
         this.load.image('tiles', 'assets/images/RPG Nature Tileset.png');
         this.load.tilemapTiledJSON('map', 'assets/images/map.json');
 
@@ -80,12 +83,18 @@ export default class MainScene extends Phaser.Scene {
             this.blueTeamTurrets.push(turret);  
         });
 
+        this.harvesters = [];
+        //this.harvesterSpawner.spawnHarvesters();
+
         this.electrovoxi = [];
         this.electrovoxSpawner = new ElectrovoxSpawner(this);
         this.electrovoxSpawner.spawnBoth();
 
         this.creeps = [];
-        //creep spawner
+        this.creepSpawner = new CreepSpawner(this);
+        // this.creep = new JungleCreep({ scene:this, x:500, y:1420, texture:'thermalBeetle' });
+        // this.creep.setFixedRotation();
+        this.creepSpawner.spawnCreeps();
         
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.1, 0.1);
@@ -94,9 +103,15 @@ export default class MainScene extends Phaser.Scene {
 
     update(time, delta) {
         this.player.update();
+        //this.creep.update();
         this.electrovoxi.forEach(minion => {
             if (minion.active) {  // Check if the minion is still active
                 minion.update(time, delta);  // Call the update method of each minion
+            }
+        });
+        this.creeps.forEach(creep => {
+            if (creep.active) {  // Check if the minion is still active
+                creep.update(time, delta);  // Call the update method of each minion
             }
         });
         this.redTeamTurrets.forEach(turret => {
