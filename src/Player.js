@@ -6,8 +6,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.team = 'red'; //maybe later allow for blue team player
 
         const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-        var playerCollider = Bodies.circle(this.x, this.y, 20, { isSensor: false, label: 'playerCollider' });
-        var playerSensor = Bodies.circle(this.x, this.y, 32, { isSensor: true, label: 'playerSensor' });
+        var playerCollider = Bodies.circle(this.x, this.y, 16, { isSensor: false, label: 'playerCollider' });
+        var playerSensor = Bodies.circle(this.x, this.y, 16, { isSensor: true, label: 'playerSensor' });
         const compoundBody = Body.create({
             parts: [ playerCollider, playerSensor ],
             frictionAir: 0.35,

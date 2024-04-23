@@ -2,10 +2,7 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
 
     constructor(data) {
         let { scene, x, y, texture,} = data;
-        super(scene.matter.world, x, y, texture, {
-            friction: 1,
-            frictionAir : 0.8
-        });
+        super(scene.matter.world, x, y, texture);
 
         this.scene.add.existing(this);
         this.moveSpeed = 2;
@@ -21,9 +18,9 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
         this.spawnY = y; 
         this.leashRange = 100; // Range to return to spawn point
 
-        this.senseRange = 200; //can sense and move towards target
-        this.attackRange = 16; // melee attacker so needs to be close
-        this.attackCooldown = 500; // Cooldown in milliseconds
+        this.senseRange = 160; //can sense and move towards target
+        this.attackRange = 85; // melee attacker so needs to be close
+        this.attackCooldown = 1000; // Cooldown in milliseconds
         this.lastAttackTime = 0; 
 
         this.chasingTarget = false; 
