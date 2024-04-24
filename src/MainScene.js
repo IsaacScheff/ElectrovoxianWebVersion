@@ -36,7 +36,8 @@ export default class MainScene extends Phaser.Scene {
         this.redTeam = [];
         this.blueTeam = [];
 
-        this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovoxPlayerRed' });
+        //this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovoxPlayerRed' });
+        this.player = new Player({ scene:this, x:2000, y:96, texture:'electrovoxPlayerRed' });
         this.redTeam.push(this.player);
         this.player.scaleX = 2;
         this.player.scaleY = 2;
@@ -90,7 +91,6 @@ export default class MainScene extends Phaser.Scene {
 
         this.redHarvesters = [];
         this.blueHarvesters = [];
-        //this.laner = new Laner({ scene:this, x:128, y:1720, texture:'quantumSentinel', team: 'red' });
         this.harvesterSpawner = new HarvesterSpawner(this);
         this.harvesterSpawner.spawnBoth();
 
@@ -113,7 +113,12 @@ export default class MainScene extends Phaser.Scene {
             if(harvester.active) {
                 harvester.update(time, delta);
             }
-        })
+        });
+        this.blueHarvesters.forEach(harvester => {
+            if(harvester.active) {
+                harvester.update(time, delta);
+            }
+        });
         this.electrovoxi.forEach(electrovox => {
             if (electrovox.active) {  // Check if the npc is still active
                 electrovox.update(time, delta);  // Call the update method of each npc

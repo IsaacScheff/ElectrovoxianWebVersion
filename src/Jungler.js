@@ -39,16 +39,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
                 }
             }
         }
-        // if (!this.detectAndAttack(time)) {
-        //     if (this.waypoints && this.currentWaypointIndex < this.waypoints.length) {
-        //         let target = this.waypoints[this.currentWaypointIndex];
-        //         let reached = this.moveTo(target);
-
-        //         if (reached) {
-        //             this.currentWaypointIndex++;
-        //         }
-        //     }
-        // }
+   
         this.updateHealthBar();
 
         let tile = this.scene.map.getTileAtWorldXY(this.x, this.y, true, this.scene.cameras.main, 'Tile Layer 3');
