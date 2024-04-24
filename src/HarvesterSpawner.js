@@ -52,8 +52,8 @@ export default class HarvesterSpawner {
             });
             console.log(harvester);
             if(harvester.role === "jungler"){
-                harvester.scaleX = 0.75;
-                harvester.scaleY = 0.75;
+                harvester.scaleX = 0.6;
+                harvester.scaleY = 0.6;
             }
             harvester.setFixedRotation();
             (team === 'red' ? this.scene.redHarvesters : this.scene.blueHarvesters).push(harvester);
