@@ -6,9 +6,12 @@ export default class HarvesterSpawner {
         this.scene = scene;
         this.respawnTimer = 20000; // 20 seconds
         this.redTeamSpawns = [
-            {x: 64, y: 1568, waypoints: [ {x:64, y:208}], role: "toplane"}, 
-            {x: 320, y: 1600, waypoints: [{x: 1024, y: 1024}], role: "midlane"}, 
-            {x: 416, y: 2016, waypoints: [{x: 1984, y: 2016}], role: "botlane"}
+            //{x: 64, y: 1568, waypoints: [ {x:64, y:208}], role: "toplane"}, 
+            //{x: 320, y: 1600, waypoints: [{x: 1024, y: 1024}], role: "midlane"}, 
+            //{x: 416, y: 2016, waypoints: [{x: 1984, y: 2016}], role: "botlane"}
+            {x: 64, y: 1568, waypoints: [ {x:64, y:208}, {x: 464, y: 128}, {x: 954, y: 128}, {x:1504, y: 128}]}, 
+            {x: 320, y: 1600, waypoints: [{x: 1024, y: 1024},{ x: 1564, y: 432 }, { x: 1364, y: 632 }, { x: 1164, y: 832 }]}, 
+            {x: 416, y: 2016, waypoints: [{x: 1984, y: 2016}, { x: 1920, y: 544 }, { x: 1920, y: 1084 }, { x: 1920, y: 1584 },]}
         ]
         // this.blueTeamSpawns = [
         //     {x: 2016, y: 416, waypoints: [{x: 1984, y: 2016}, { x: 1584, y: 1920 }, { x: 1084, y: 1920 }, { x: 544, y: 1920 }]},
@@ -22,10 +25,10 @@ export default class HarvesterSpawner {
         //this.spawnHarvesters('blue');
     }
 
-    spawnHarvesters(team, type) { 
+    spawnHarvesters(team) { 
         const teamSpawns = (team == 'red' ? this.redTeamSpawns : this.blueTeamSpawns);
-        teamSpawns.forEach((spawn, index) => {
-            let harvester = new (type === Laner ? Laner : Jungler)({
+        teamSpawns.forEach((spawn) => {
+            let harvester = new (spawn.role === Jungler ? Jungler : Laner)({
                 scene: this.scene,
                 x: spawn.x,
                 y: spawn.y,

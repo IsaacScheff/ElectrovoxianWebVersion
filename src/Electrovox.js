@@ -9,7 +9,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.currentWaypointIndex = 0;
         this.moveSpeed = 2;
 
-        this.maxHealth = 100;
+        this.maxHealth = 50;
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
@@ -64,7 +64,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
                 if (currentTime > this.lastShotTime + this.shootingCooldown) {
                     this.shootAt(enemy);  // Perform shooting
                     this.lastShotTime = currentTime;  // Update last shot time
-                    console.log(`Electrovox from ${this.team} shooting at enemy!`);
+                    //console.log(`Electrovox from ${this.team} shooting at enemy!`);
                 }
             }
         }

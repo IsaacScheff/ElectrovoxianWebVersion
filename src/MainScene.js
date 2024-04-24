@@ -4,7 +4,6 @@ import Player from "./Player.js";
 import Turret from "./Turret.js";
 import JungleCreep from "./JungleCreep.js";
 import CreepSpawner from "./CreepSpawner.js";
-import Harvester from "./Harvester.js";
 import Laner from "./Laner.js";
 import HarvesterSpawner from "./HarvesterSpawner.js";
 
@@ -18,7 +17,7 @@ export default class MainScene extends Phaser.Scene {
         Turret.preload(this);
         Electrovox.preload(this);
         JungleCreep.preload(this);
-        Harvester.preload(this);
+        Laner.preload(this);
         this.load.image('tiles', 'assets/images/RPG Nature Tileset.png');
         this.load.tilemapTiledJSON('map', 'assets/images/map.json');
 
@@ -99,8 +98,6 @@ export default class MainScene extends Phaser.Scene {
 
         this.creeps = [];
         this.creepSpawner = new CreepSpawner(this);
-        // this.creep = new JungleCreep({ scene:this, x:500, y:1420, texture:'thermalBeetle' });
-        // this.creep.setFixedRotation();
         this.creepSpawner.spawnCreeps();
         
         this.cameras.main.startFollow(this.player, true);
@@ -110,7 +107,6 @@ export default class MainScene extends Phaser.Scene {
 
     update(time, delta) {
         this.player.update();
-        //this.creep.update();
         this.redHarvesters.forEach(harvester => {
             if(harvester.active) {
                 harvester.update(time, delta);

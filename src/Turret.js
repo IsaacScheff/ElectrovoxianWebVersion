@@ -6,7 +6,7 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.team = team;
         this.enemies = [];
 
-        this.maxHealth = 100;
+        this.maxHealth = 1000;
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
@@ -49,7 +49,6 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
     }
     takeDamage(amount) { 
         if (!this.active) return;  // Skip if already destroyed
-        console.log("bam!");
         this.currentHealth -= amount;
         if (this.currentHealth <= 0) {
             this.die();
