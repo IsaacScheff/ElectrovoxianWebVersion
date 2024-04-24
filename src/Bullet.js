@@ -1,6 +1,6 @@
 export default class Bullet extends Phaser.Physics.Matter.Sprite {
     constructor(scene, x, y, texture, direction, speed, damage, enemies, lifetime) {
-        super(scene.matter.world, x, y, texture, damage, enemies);
+        super(scene.matter.world, x, y, texture);
         this.scene = scene;
         this.direction = direction;
         this.speed = speed;
@@ -29,6 +29,9 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
                 this.destroy();
             }
         }, [], this);
+    }
+    static preload(scene) {
+        scene.load.image('energyBallRed', 'assets/images/EnergyBallRed.png');
     }
 
     destroy() {

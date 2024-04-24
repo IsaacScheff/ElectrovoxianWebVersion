@@ -1,3 +1,4 @@
+import Bullet from "./Bullet.js";
 import Electrovox from "./Electrovox.js";
 import ElectrovoxSpawner from "./ElectrovoxSpawner.js";
 import Player from "./Player.js";
@@ -14,6 +15,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
+        Bullet.preload(this);
         Player.preload(this);
         Turret.preload(this);
         Electrovox.preload(this);
