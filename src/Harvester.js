@@ -1,11 +1,11 @@
 export default class Harvester extends Phaser.Physics.Matter.Sprite {
 
     constructor(data) {
-        let { scene, x, y, texture, team } = data;
+        let { scene, x, y, texture, team, role } = data;
         super(scene.matter.world, x, y, texture);
         this.team = team;
         this.scene.add.existing(this);
-   
+        this.role = role;
         this.moveSpeed = 2.5;
 
         this.maxHealth = 100;
@@ -20,7 +20,8 @@ export default class Harvester extends Phaser.Physics.Matter.Sprite {
         this.isHidden = false;
     }
     static preload(scene) {
-        
+        scene.load.image('gravithor', 'assets/images/Gravithor.png');
+        scene.load.image('quantumSentinel', 'assets/images/QuantumSentinel.png');
     }
     update(time, delta) {
         if (!this.active) return;  // Skip updating if not active

@@ -4,6 +4,9 @@ import Player from "./Player.js";
 import Turret from "./Turret.js";
 import JungleCreep from "./JungleCreep.js";
 import CreepSpawner from "./CreepSpawner.js";
+import Harvester from "./Harvester.js";
+import Laner from "./Laner.js";
+import HarvesterSpawner from "./HarvesterSpawner.js";
 
 export default class MainScene extends Phaser.Scene {
     constructor() {
@@ -15,6 +18,7 @@ export default class MainScene extends Phaser.Scene {
         Turret.preload(this);
         Electrovox.preload(this);
         JungleCreep.preload(this);
+        Harvester.preload(this);
         this.load.image('tiles', 'assets/images/RPG Nature Tileset.png');
         this.load.tilemapTiledJSON('map', 'assets/images/map.json');
 
@@ -85,7 +89,9 @@ export default class MainScene extends Phaser.Scene {
 
         this.redHarvesters = [];
         this.blueHarvesters = [];
-        //this.harvesterSpawner.spawnHarvesters();
+        //this.laner = new Laner({ scene:this, x:128, y:1720, texture:'quantumSentinel', team: 'red' });
+        this.harvesterSpawner = new HarvesterSpawner(this);
+        this.harvesterSpawner.spawnBoth();
 
         this.electrovoxi = [];
         this.electrovoxSpawner = new ElectrovoxSpawner(this);
@@ -105,14 +111,19 @@ export default class MainScene extends Phaser.Scene {
     update(time, delta) {
         this.player.update();
         //this.creep.update();
-        this.electrovoxi.forEach(minion => {
-            if (minion.active) {  // Check if the minion is still active
-                minion.update(time, delta);  // Call the update method of each minion
+        this.redHarvesters.forEach(harvester => {
+            if(harvester.active) {
+                harvester.update(time, delta);
+            }
+        })
+        this.electrovoxi.forEach(electrovox => {
+            if (electrovox.active) {  // Check if the npc is still active
+                electrovox.update(time, delta);  // Call the update method of each npc
             }
         });
         this.creeps.forEach(creep => {
-            if (creep.active) {  // Check if the minion is still active
-                creep.update(time, delta);  // Call the update method of each minion
+            if (creep.active) { 
+                creep.update(time, delta);  
             }
         });
         this.redTeamTurrets.forEach(turret => {
