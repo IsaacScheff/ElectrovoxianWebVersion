@@ -1,3 +1,4 @@
+import Bullet from "./Bullet";
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let { scene, x, y, texture } = data;
@@ -19,6 +20,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.bulletSpeed = 10;
         this.shootingCooldown = 500;
         this.lastShotTime = 0;
+        this.damage = 30;
 
         this.body.parts.forEach(part => part.gameObject = this);
 
@@ -36,8 +38,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     update(time, delta) {
-        //const speed = 2.5;
-        const speed = 25; //for zooming around the map to test
+        const speed = 2.5;
+        //const speed = 25; //for zooming around the map to test
         let playerVelocity = new Phaser.Math.Vector2();
 
         if(this.inputKeys.left.isDown) {
@@ -73,11 +75,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     shoot() {
-        console.log("player shooting");
-        if (this.shootingDirection.lengthSq() > 0) { // Ensure there's a direction to shoot towards
+        if (this.shootingDirection.lengthSq() > 0) {
             let direction = this.shootingDirection.normalize();
-            let bullet = this.scene.matter.add.sprite(this.x + direction.x * 30, this.y + direction.y * 30, 'energyBallRed');
-            bullet.setVelocity(direction.x * this.bulletSpeed, direction.y * this.bulletSpeed);
+            let enemies = (this.team === 'red' ? this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : this.scene.redTeam.concat(this.scene.redTeamTurrets));
+            enemies = enemies.concat(this.scene.creeps);
+            new Bullet(this.scene, this.x + direction.x * 30, this.y + direction.y * 30, 'energyBallRed', direction, this.bulletSpeed, this.damage, enemies);
         }
     }
 

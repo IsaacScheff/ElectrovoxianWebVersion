@@ -47,6 +47,8 @@ export default class MainScene extends Phaser.Scene {
             shoot: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
 
+        this.bullets = [];
+
         this.redTeamTurrets = [];
         this.blueTeamTurrets = [];
         const redTeamTurretPositions = [ 
@@ -133,6 +135,11 @@ export default class MainScene extends Phaser.Scene {
         });
         this.blueTeamTurrets.forEach(turret => {
             turret.update(time, delta);
+        });
+        this.bullets.forEach(bullet => {
+            if (bullet.active) {
+                bullet.update(time, delta);
+            }
         });
     }
 }
