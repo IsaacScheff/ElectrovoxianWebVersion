@@ -4,8 +4,7 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
         this.scene = scene;
         this.direction = direction;
         this.speed = speed;
-        this.lifetime = 1000;  // Lifetime of the bullet in milliseconds
-        this.travelDistance = 500;  // Maximum travel distance
+        this.lifetime = 300;  // Lifetime of the bullet in milliseconds
         this.startX = x;
         this.startY = y;
         this.damage = damage;
@@ -13,7 +12,6 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
 
         // Adding the bullet to the scene
         scene.add.existing(this);
-        this.scene.bullets.push(this);
         this.setVelocity(direction.x * speed, direction.y * speed);
 
         // Setting up collision events
@@ -32,19 +30,9 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
             }
         }, [], this);
     }
-    update(time, delta) {
-        // Destroy the bullet if it travels beyond its max distance
-        if (Phaser.Math.Distance.Between(this.startX, this.startY, this.x, this.y) > this.travelDistance) {
-            this.destroy();
-        }
-    }
 
     destroy() {
         console.log("destroy called");
-        let index = this.scene.bullets.indexOf(this);
-        if (index !== -1) {
-            this.scene.bullets.splice(index, 1);  // Remove from array
-        }
         super.destroy();  // Call the original destroy method
     }
 }
