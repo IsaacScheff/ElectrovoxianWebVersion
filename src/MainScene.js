@@ -22,7 +22,6 @@ export default class MainScene extends Phaser.Scene {
         Laner.preload(this);
         this.load.image('tiles', 'assets/images/RPG Nature Tileset.png');
         this.load.tilemapTiledJSON('map', 'assets/images/map.json');
-
     }
 
     create() {
@@ -45,6 +44,7 @@ export default class MainScene extends Phaser.Scene {
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
             right: Phaser.Input.Keyboard.KeyCodes.D,
+            shoot: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
 
         this.redTeamTurrets = [];
@@ -107,7 +107,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
-        this.player.update();
+        this.player.update(time, delta);
         this.redHarvesters.forEach(harvester => {
             if(harvester.active) { // Check if the npc is still active
                 harvester.update(time, delta); // Call the update method of each npc

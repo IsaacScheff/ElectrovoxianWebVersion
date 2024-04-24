@@ -15,6 +15,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.setExistingBody(compoundBody);
         this.setFixedRotation();
 
+        this.shootingDirection = new Phaser.Math.Vector2(0, 0); // Default direction
+        this.bulletSpeed = 10;
+        this.shootingCooldown = 500;
+        this.lastShotTime = 0;
+
         this.body.parts.forEach(part => part.gameObject = this);
 
         this.maxHealth = 100;
@@ -27,12 +32,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     static preload(scene) {
         scene.load.image('electrovoxPlayerRed', 'assets/images/ElectrovoxPlayerRed.png');
+        scene.load.image('energyBallRed', 'assets/images/EnergyBallRed.png');
     }
 
-    update() {
+    update(time, delta) {
         //const speed = 2.5;
         const speed = 25; //for zooming around the map to test
         let playerVelocity = new Phaser.Math.Vector2();
+
         if(this.inputKeys.left.isDown) {
             playerVelocity.x = -1;
         } else if (this.inputKeys.right.isDown) {
@@ -49,6 +56,12 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.body.position.x = this.x;
         this.body.position.y = this.y;
 
+    this.shootingDirection.set(playerVelocity.x, playerVelocity.y);
+        if (this.inputKeys.shoot.isDown && time > this.lastShotTime + this.shootingCooldown) {
+            this.shoot();
+            this.lastShotTime = time;
+        }
+
         this.updateHealthBar();
 
         let tile = this.scene.map.getTileAtWorldXY(this.x, this.y, true, this.scene.cameras.main, 'Tile Layer 3');
@@ -56,6 +69,15 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.hide(true);
         } else {
             this.hide(false);
+        }
+    }
+
+    shoot() {
+        console.log("player shooting");
+        if (this.shootingDirection.lengthSq() > 0) { // Ensure there's a direction to shoot towards
+            let direction = this.shootingDirection.normalize();
+            let bullet = this.scene.matter.add.sprite(this.x + direction.x * 30, this.y + direction.y * 30, 'energyBallRed');
+            bullet.setVelocity(direction.x * this.bulletSpeed, direction.y * this.bulletSpeed);
         }
     }
 
