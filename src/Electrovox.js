@@ -111,7 +111,6 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
     }
     die() {
-        console.log("Minion died.");
         let index = this.scene.electrovoxi.indexOf(this);
         if (index !== -1) {
             this.scene.electrovoxi.splice(index, 1);  // Remove from array

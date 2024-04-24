@@ -10,8 +10,8 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
         this.damage = damage;
         this.enemies = enemies;
 
-        // Adding the bullet to the scene
-        scene.add.existing(this);
+        //Adding the bullet to the scene
+        //scene.add.existing(this);
         this.setVelocity(direction.x * speed, direction.y * speed);
 
         // Setting up collision events
@@ -32,7 +32,6 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
     }
 
     destroy() {
-        console.log("destroy called");
         super.destroy();  // Call the original destroy method
     }
 }

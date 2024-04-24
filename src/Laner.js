@@ -1,3 +1,4 @@
+import Bullet from "./Bullet";
 export default class Laner extends Phaser.Physics.Matter.Sprite {
 
     constructor(data) {
@@ -17,6 +18,9 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
         this.attackRange = 192; // Attack range in pixels
         this.shootingCooldown = 1500; // Cooldown in milliseconds
         this.lastShotTime = 0;
+        this.bulletSpeed = 8;
+        this.bulletDamage = 20;
+        this.bulletLifetime = 500;
 
         this.isHidden = false;
     }
@@ -62,7 +66,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
                 ) {
                 enemyDetected = true;
                 if (currentTime > this.lastShotTime + this.shootingCooldown) {
-                    this.shootAt(enemy);
+                    this.shootAt(enemy, enemies);
                     this.lastShotTime = currentTime;
                 }
             }
@@ -75,8 +79,14 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
         return false;
     }
 
-    shootAt(enemy) {
-        enemy.takeDamage(20);
+    // shootAt(enemy) {
+    //     enemy.takeDamage(20);
+    // }
+    shootAt(enemy, enemies) {
+        const direction = new Phaser.Math.Vector2(enemy.x - this.x, enemy.y - this.y).normalize();
+        const offsetX = this.x + direction.x * 64;
+        const offsetY = this.y + direction.y * 64;
+        new Bullet(this.scene, offsetX, offsetY, 'energyBallRed', direction, this.bulletSpeed, this.bulletDamage, enemies, this.bulletLifetime);
     }
 
     moveTo(target) {
