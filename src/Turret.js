@@ -37,7 +37,6 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
             this.enemies.forEach(enemy => { // Assuming you have a list of enemies
                 if (enemy.active && Phaser.Geom.Circle.ContainsPoint(this.detectionArea, enemy)) {
                     if (enemy.team !== this.team) {
-                        console.log(`Turret on team ${this.team} has detected an enemy from team ${enemy.team}`);
                         enemy.takeDamage(30); // Deal damage or whatever effect you want
                         this.lastFireTime = time;
                         return; // Exit after the first target is engaged

@@ -60,7 +60,6 @@ export default class HarvesterSpawner {
                 waypoints: spawn.waypoints,
                 role: spawn.role
             });
-            console.log(harvester);
             if(harvester.role === "jungler"){
                 harvester.scaleX = 0.6;
                 harvester.scaleY = 0.6;

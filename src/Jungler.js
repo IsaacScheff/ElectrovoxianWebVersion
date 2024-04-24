@@ -56,7 +56,6 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
                   this.scene.redTeam.concat(this.scene.redTeamTurrets);
         
         enemies = enemies.concat(this.scene.creeps);
-        console.log(enemies);
         let enemyDetected = false;
         for (let enemy of enemies) {
             if (

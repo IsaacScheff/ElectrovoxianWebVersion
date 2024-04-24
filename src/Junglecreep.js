@@ -1,7 +1,7 @@
 export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
 
     constructor(data) {
-        let { scene, x, y, texture,} = data;
+        let { scene, x, y, texture, indexOfSpawn} = data;
         super(scene.matter.world, x, y, texture);
 
         this.scene.add.existing(this);
@@ -16,6 +16,7 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
 
         this.spawnX = x;
         this.spawnY = y; 
+        this.indexOfSpawn = indexOfSpawn;
         this.leashRange = 100; // Range to return to spawn point
 
         this.senseRange = 160; //can sense and move towards target
@@ -118,6 +119,8 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
             this.scene.creeps.splice(index, 1);  // Remove from array
         }
         this.healthBar.destroy();
+        console.log(this.scene);
+        this.scene.creepSpawner.respawnCreep(this.indexOfSpawn);
         this.destroy();  // Phaser's method to remove the sprite
     }
     hide(hideStatus) { //TODO: after jam; more intricate hide mechanic for characters in seperate bushes than the enemies

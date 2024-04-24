@@ -3,8 +3,7 @@ import JungleCreep from "./JungleCreep.js";
 export default class CreepSpawner {
     constructor(scene) {
         this.scene = scene;
-        this.respawnTimer = 30000; // 30 seconds
-
+        this.respawnTimer = 5000; // 30 seconds
         this.creepSpawns = [
             {x: 1024, y: 448},
             {x: 992, y: 1600},
@@ -18,21 +17,38 @@ export default class CreepSpawner {
     }
     spawnCreeps() { 
         this.creepSpawns.forEach((spawn, index) => {
-            let creep = new JungleCreep({
-                scene: this.scene,
-                x: spawn.x,
-                y: spawn.y,
-                texture: 'thermalBeetle',
-                team: 'neutral',
-                index: index
-            });
-            creep.scaleX = 0.5;
-            creep.scaleY = 0.5;
-            creep.setFixedRotation();
-            this.scene.creeps.push(creep);
+            this.spawnCreepAt(index);
         });
     }
+    spawnCreepAt(index) {
+        const spawn = this.creepSpawns[index];
+    
+        if (!spawn) {
+            console.error("Invalid spawn data for index:", index);
+            return; // Stop the function if spawn data is invalid
+        }
+    
+        let creep = new JungleCreep({
+            scene: this.scene,
+            x: spawn.x,
+            y: spawn.y,
+            texture: 'thermalBeetle',
+            team: 'neutral',
+            indexOfSpawn: index
+        });
+        creep.scaleX = 0.5;
+        creep.scaleY = 0.5;
+        creep.setFixedRotation();
+        this.scene.creeps.push(creep);
+    }
     respawnCreep(creepIndex) {
-        //respawn the creep after respawnTimer amoutn of time has passed
+        console.log(creepIndex);
+        console.log(this);
+        this.scene.time.delayedCall(
+            this.respawnTimer, 
+            this.spawnCreepAt.bind(this, creepIndex), // Binding 'this' and passing 'creepIndex' directly
+            [], // No additional arguments are needed here since they're bound
+            this // Context is specified, though technically redundant now
+        );
     }
 }
