@@ -1,3 +1,5 @@
+import Bullet from "./Bullet";
+
 export default class Turret extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let { scene, x, y, texture, team } = data;
@@ -11,20 +13,16 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
 
-        // const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-        // var turretCollider = Bodies.rectangle(x, y, 32, 64, { isSensor: false, label: 'turretCollider' });
         this.detectionArea = new Phaser.Geom.Circle(x, y, 200);
 
-        // const compoundBody = Body.create({
-        //     parts: [turretCollider],
-        //     frictionAir: 0.35,
-        // });
-        // this.setExistingBody(compoundBody);
         this.setFixedRotation();
 
         this.lastFireTime = 0;
         this.cooldownPeriod = 3000; // cooldown in milliseconds
         this.lastDetectionTime = 0; // timestamp of last detection
+        this.bulletSpeed = 5;
+        this.bulletDamage = 30; 
+        this.bulletLifetime = 500;
 
         this.isHidden = false; //needed for enemies to shoot them
 
@@ -37,7 +35,8 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
             this.enemies.forEach(enemy => { // Assuming you have a list of enemies
                 if (enemy.active && Phaser.Geom.Circle.ContainsPoint(this.detectionArea, enemy)) {
                     if (enemy.team !== this.team) {
-                        enemy.takeDamage(30); // Deal damage or whatever effect you want
+                        //enemy.takeDamage(30); // Deal damage or whatever effect you want
+                        this.fire(enemy);
                         this.lastFireTime = time;
                         return; // Exit after the first target is engaged
                     }
@@ -45,6 +44,14 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
             });
         }
         this.updateHealthBar();
+    }
+    fire(target) {
+        const direction = new Phaser.Math.Vector2(target.x - this.x, target.y - this.y).normalize();
+        let enemies = this.team === 'red' ? this.scene.blueTeam : this.scene.redTeam; // Enemies list for bullet interaction
+
+        const offsetX = this.x + direction.x * 64;
+        const offsetY = this.y + direction.y * 64;
+        new Bullet(this.scene, offsetX, offsetY, 'energyBallRed', direction, this.bulletSpeed, this.bulletDamage, enemies, this.bulletLifetime);
     }
     takeDamage(amount) { 
         if (!this.active) return;  // Skip if already destroyed

@@ -19,6 +19,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.shootingDirection = new Phaser.Math.Vector2(0, 0); // Default direction
         this.bulletSpeed = 10;
         this.shootingCooldown = 500;
+        this.bulletLifetime = 350;
         this.lastShotTime = 0;
         this.damage = 30;
 
@@ -79,7 +80,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             let direction = this.shootingDirection.normalize();
             let enemies = (this.team === 'red' ? this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : this.scene.redTeam.concat(this.scene.redTeamTurrets));
             enemies = enemies.concat(this.scene.creeps);
-            new Bullet(this.scene, this.x + direction.x * 30, this.y + direction.y * 30, 'energyBallRed', direction, this.bulletSpeed, this.damage, enemies);
+            new Bullet(this.scene, this.x + direction.x * 30, this.y + direction.y * 30, 'energyBallRed', direction, this.bulletSpeed, this.damage, enemies, this.bulletLifetime);
         }
     }
 

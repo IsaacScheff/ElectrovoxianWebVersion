@@ -1,10 +1,10 @@
 export default class Bullet extends Phaser.Physics.Matter.Sprite {
-    constructor(scene, x, y, texture, direction, speed, damage, enemies) {
+    constructor(scene, x, y, texture, direction, speed, damage, enemies, lifetime) {
         super(scene.matter.world, x, y, texture, damage, enemies);
         this.scene = scene;
         this.direction = direction;
         this.speed = speed;
-        this.lifetime = 300;  // Lifetime of the bullet in milliseconds
+        this.lifetime = lifetime;  // Lifetime of the bullet in milliseconds
         this.startX = x;
         this.startY = y;
         this.damage = damage;
