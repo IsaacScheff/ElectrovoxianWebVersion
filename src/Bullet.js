@@ -19,7 +19,7 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
         // Setting up collision events
         this.setOnCollide((pair) => {
             const target = pair.bodyA.gameObject;
-            if (target && target.takeDamage) {
+            if (target && this.enemies.includes(target)) {
                 target.takeDamage(this.damage);
             }
             this.destroy();  // Destroy the bullet on collision
