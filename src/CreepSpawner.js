@@ -42,8 +42,6 @@ export default class CreepSpawner {
         this.scene.creeps.push(creep);
     }
     respawnCreep(creepIndex) {
-        console.log(creepIndex);
-        console.log(this);
         this.scene.time.delayedCall(
             this.respawnTimer, 
             this.spawnCreepAt.bind(this, creepIndex), // Binding 'this' and passing 'creepIndex' directly

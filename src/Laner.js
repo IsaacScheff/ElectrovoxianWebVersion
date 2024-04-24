@@ -126,6 +126,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
             teamArray.splice(teamIndex, 1);
         }
         this.healthBar.destroy();
+        this.scene.harvesterSpawner.handleHarvesterDeath(this);
         this.destroy();
     }
 

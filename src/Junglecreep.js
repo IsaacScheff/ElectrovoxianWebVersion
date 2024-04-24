@@ -119,7 +119,6 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
             this.scene.creeps.splice(index, 1);  // Remove from array
         }
         this.healthBar.destroy();
-        console.log(this.scene);
         this.scene.creepSpawner.respawnCreep(this.indexOfSpawn);
         this.destroy();  // Phaser's method to remove the sprite
     }
