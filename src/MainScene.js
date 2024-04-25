@@ -14,7 +14,7 @@ export default class MainScene extends Phaser.Scene {
     constructor() {
         super("MainScene");
         this.gamePaused = false;
-        this.pauseMenu;
+        //this.pauseMenu;
     }
 
     preload() {
@@ -176,10 +176,28 @@ export default class MainScene extends Phaser.Scene {
             this.hidePauseMenu();
         }
     }
-    showPauseMenu() {
-        this.pauseMenu = this.add.text(this.cameras.main.scrollX + this.cameras.main.width / 2,
+    pauseGame(message = 'Game Paused') {
+        this.gamePaused = !this.gamePaused;  // Toggle the pause state
+        if (this.gamePaused) {
+            this.matter.world.pause(); // Pause the game's physics
+            this.time.timeScale = 0; 
+            if (message === 'GAME OVER') {
+                this.setupGameOver();
+            }
+            this.showPauseMenu(message);
+        } else {
+            this.matter.world.resume();
+            this.time.timeScale = 1;
+            this.hidePauseMenu();
+        }
+        if (message === 'GAME OVER') {
+            this.setupGameOver();
+        }
+    }
+    showPauseMenu(text) {
+        this.pauseMenuText = this.add.text(this.cameras.main.scrollX + this.cameras.main.width / 2,
                                        this.cameras.main.scrollY + this.cameras.main.height / 2, 
-                                       'Game Paused', { 
+                                       text, { 
                                            font: '24px Arial', 
                                            fill: '#ffffff',
                                            stroke: '#000000',
@@ -195,9 +213,27 @@ export default class MainScene extends Phaser.Scene {
             .setDepth(1000);
     }
     hidePauseMenu() {
-        // Remove the pause menu from the scene
-        if (this.pauseMenu) {
-            this.pauseMenu.destroy();
+        if (this.pauseMenuText) {
+            this.pauseMenuText.destroy();
         }
-    }    
+    } 
+    setupGameOver() {
+        this.add.text(this.cameras.main.scrollX + this.cameras.main.width / 2,
+                      this.cameras.main.scrollY + this.cameras.main.height / 2 + 40, 
+                      'Press any key to return to Menu', { 
+                          font: '20px Arial', 
+                          fill: '#fff',
+                          stroke: '#000',
+                          strokeThickness: 3
+                      })
+            .setOrigin(0.5)
+            .setDepth(1000);
+    
+        this.input.keyboard.once('keydown', () => {
+            this.scene.start('MainMenuScene'); 
+        });
+    } 
+    handlePlayerDeath() {
+        this.pauseGame('GAME OVER');
+    }  
 }

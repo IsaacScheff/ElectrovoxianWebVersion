@@ -1,6 +1,6 @@
 /*
     Had some trouble working out inheritance related bugs; 
-    given the limited time frame of the jame going to ignore for now
+    given the limited time frame of the jam going to ignore for now
     and simply repeat code in the Laner and Jungler classes.
     Will look into along with other optimizations post-game jam.
 */

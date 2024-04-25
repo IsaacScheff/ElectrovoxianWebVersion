@@ -104,9 +104,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.currentHealth = Math.max(0, this.currentHealth);
         this.updateHealthBar();
 
-        // if (this.currentHealth <= 0) {
-        //     this.die();
-        // }
+        if (this.currentHealth <= 0) {
+            this.die();
+        }
     }
 
     hide(hideStatus) { //TODO: after jam; more intricate hide mechanic for characters in seperate bushes than the enemies
@@ -117,5 +117,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             this.isHidden = false;
             this.setAlpha(1.0);  // Set opacity to 100%
         }
+    }
+
+    die(){
+        this.scene.handlePlayerDeath();
     }
 }
