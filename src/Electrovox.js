@@ -14,6 +14,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
+        this.healthBarColor = (this.team === 'red' ? '0xffa500' : "0x189ab4");
 
         this.attackRange = 192; // Attack range in pixels
         this.shootingCooldown = 1500; // Cooldown in milliseconds
@@ -32,7 +33,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         if (!this.active) return;  // Skip updating if not active
 
         this.flipX = (this.body.velocity.x < 0);  // Flip sprite based on horizontal movement
-        
+
         if (!this.detectAndShoot(time)) {
             // Move towards waypoints if no enemy to shoot
             if (this.waypoints && this.currentWaypointIndex < this.waypoints.length) {
@@ -119,7 +120,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.healthBar.fillStyle(0x808080, 1);
         this.healthBar.fillRect(0, 0, 60, 10);
 
-        this.healthBar.fillStyle(0xff0000, 1);
+        this.healthBar.fillStyle(this.healthBarColor, 1);
         this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
     }
     die() {

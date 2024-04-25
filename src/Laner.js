@@ -14,6 +14,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
+        this.healthBarColor = (this.team === 'red' ? '0xffa500' : "0x189ab4");
 
         this.attackRange = 192; // Attack range in pixels
         this.shootingCooldown = 1500; // Cooldown in milliseconds
@@ -81,9 +82,6 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
         return false;
     }
 
-    // shootAt(enemy) {
-    //     enemy.takeDamage(20);
-    // }
     shootAt(enemy, enemies) {
         const direction = new Phaser.Math.Vector2(enemy.x - this.x, enemy.y - this.y).normalize();
         const offsetX = this.x + direction.x * 64;
@@ -118,7 +116,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
         this.healthBar.setPosition(this.x - 30, this.y - 40);
         this.healthBar.fillStyle(0x808080, 1);
         this.healthBar.fillRect(0, 0, 60, 10);
-        this.healthBar.fillStyle(0xff0000, 1);
+        this.healthBar.fillStyle(this.healthBarColor, 1);
         this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
     }
 

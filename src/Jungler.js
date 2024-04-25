@@ -14,6 +14,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
+        this.healthBarColor = (this.team === 'red' ? '0xffa500' : "0x189ab4");
 
         this.attackRange = 96; // melee
         this.attackingCooldown = 500; // Cooldown in milliseconds
@@ -111,7 +112,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
         this.healthBar.setPosition(this.x - 30, this.y - 40);
         this.healthBar.fillStyle(0x808080, 1);
         this.healthBar.fillRect(0, 0, 60, 10);
-        this.healthBar.fillStyle(0xff0000, 1);
+        this.healthBar.fillStyle(this.healthBarColor, 1);
         this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
     }
 
