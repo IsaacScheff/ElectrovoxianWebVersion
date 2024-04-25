@@ -6,7 +6,7 @@ export default class BioBarrels extends Phaser.Physics.Matter.Sprite {
         this.team = team; // Team association, e.g., 'red' or 'blue'
 
         this.scene.add.existing(this);
-        this.maxHealth = 5000; 
+        this.maxHealth = 1000; 
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
@@ -31,7 +31,7 @@ export default class BioBarrels extends Phaser.Physics.Matter.Sprite {
 
     updateHealthBar() {
         this.healthBar.clear();
-        this.healthBar.setPosition(this.x - 40, this.y - 60);
+        this.healthBar.setPosition(this.x - 36, this.y - 110);
         this.healthBar.fillStyle(0x808080, 1);
         this.healthBar.fillRect(0, 0, 80, 10);
         this.healthBar.fillStyle(0xff0000, 1);

@@ -51,14 +51,16 @@ export default class MainScene extends Phaser.Scene {
             shoot: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
 
-        this.redTeamBarrels = new BioBarrels({ scene: this, x: 192, y: 1792, texture:'bioBarrels'});
+        this.redTeamBarrels = new BioBarrels({ scene: this, x: 192, y: 1792, texture:'bioBarrels', team: 'red'});
         this.redTeamBarrels.scaleX = 2;
         this.redTeamBarrels.scaleY = 2;
         this.redTeamBarrels.setStatic(true);
-        this.blueTeamBarrels = new BioBarrels({ scene: this, x: 1792, y: 192, texture:'bioBarrels'});
+        this.redTeam.push(this.redTeamBarrels);
+        this.blueTeamBarrels = new BioBarrels({ scene: this, x: 1792, y: 192, texture:'bioBarrels', team: 'blue'});
         this.blueTeamBarrels.scaleX = 2;
         this.blueTeamBarrels.scaleY = 2;
         this.blueTeamBarrels.setStatic(true);
+        this.blueTeam.push(this.blueTeamBarrels);
 
         this.redTeamTurrets = [];
         this.blueTeamTurrets = [];
@@ -121,6 +123,8 @@ export default class MainScene extends Phaser.Scene {
 
     update(time, delta) {
         this.player.update(time, delta);
+        this.redTeamBarrels.update(time, delta);
+        this.blueTeamBarrels.update(time, delta);
         this.redHarvesters.forEach(harvester => {
             if(harvester.active) { // Check if the npc is still active
                 harvester.update(time, delta); // Call the update method of each npc

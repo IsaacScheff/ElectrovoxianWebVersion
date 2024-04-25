@@ -24,8 +24,8 @@ export default class ElectrovoxSpawner {
     }
 
     spawnBoth(){
-        this.spawnMinions('red');
-        this.spawnMinions('blue');
+        //this.spawnMinions('red');
+        //this.spawnMinions('blue');
     }
 
     spawnMinions(team) { 
