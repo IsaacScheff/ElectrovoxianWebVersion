@@ -35,7 +35,10 @@ export default class MainScene extends Phaser.Scene {
         const layer1 = map.createLayer('Tile Layer 1', tileset, 0, 0);
         const layer2 = map.createLayer('Tile Layer 2', tileset, 0, 0);
         const bushes = map.createLayer('Tile Layer 3', tileset, 0, 0);
-
+        const mapWidth = 2048
+        const mapHeight = 2048; 
+        this.matter.world.setBounds(0, 0, mapWidth, mapHeight);
+        
         this.redTeam = [];
         this.blueTeam = [];
 
