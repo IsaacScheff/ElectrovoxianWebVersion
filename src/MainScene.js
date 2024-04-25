@@ -38,11 +38,11 @@ export default class MainScene extends Phaser.Scene {
         const mapWidth = 2048
         const mapHeight = 2048; 
         this.matter.world.setBounds(0, 0, mapWidth, mapHeight);
-        
+
         this.redTeam = [];
         this.blueTeam = [];
 
-        this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovoxPlayerRed' });
+        this.player = new Player({ scene:this, x:1920, y:128, texture:'electrovoxPlayerRed' });
         this.redTeam.push(this.player);
         this.player.scaleX = 2;
         this.player.scaleY = 2;
@@ -71,9 +71,9 @@ export default class MainScene extends Phaser.Scene {
             { x: 128, y: 1504 },
             { x: 128, y: 964 },
             { x: 128, y: 464 },
-            { x: 544, y: 1920 },
-            { x: 1084, y: 1920 },
-            { x: 1584, y: 1920 },
+            { x: 544, y: 1900 },
+            { x: 1084, y: 1900 },
+            { x: 1584, y: 1900 },
             { x: 448, y: 1536 },
             { x: 648, y: 1336 },
             { x: 848, y: 1136 }
