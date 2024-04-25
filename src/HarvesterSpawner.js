@@ -45,8 +45,8 @@ export default class HarvesterSpawner {
     }
 
     spawnBoth(){
-        //this.spawnHarvesters('red');
-        //this.spawnHarvesters('blue');
+        this.spawnHarvesters('red');
+        this.spawnHarvesters('blue');
     }
 
     spawnHarvesters(team) { 

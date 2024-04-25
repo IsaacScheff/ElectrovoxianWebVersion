@@ -31,6 +31,9 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
     }
     update(time, delta) {
         if (!this.active) return;  // Skip updating if not active
+
+        this.flipX = (this.body.velocity.x > 0);  // Flip sprite based on horizontal movement
+
         this.updateHealthBar();
 
         // Check for nearby targets

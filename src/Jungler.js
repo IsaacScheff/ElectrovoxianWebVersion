@@ -29,6 +29,8 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
     update(time, delta) {
         if (!this.active) return;  // Skip updating if not active
 
+        this.flipX = (this.body.velocity.x > 0);  // Flip sprite based on horizontal movement
+
         if (!this.detectAndAttack(time)) {
             if (this.waypoints && this.waypoints.length > 0) {
                 let target = this.waypoints[this.currentWaypointIndex];

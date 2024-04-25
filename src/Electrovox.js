@@ -31,6 +31,8 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
     update(time, delta) {
         if (!this.active) return;  // Skip updating if not active
 
+        this.flipX = (this.body.velocity.x < 0);  // Flip sprite based on horizontal movement
+        
         if (!this.detectAndShoot(time)) {
             // Move towards waypoints if no enemy to shoot
             if (this.waypoints && this.currentWaypointIndex < this.waypoints.length) {

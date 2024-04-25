@@ -38,6 +38,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     update(time, delta) {
+        this.flipX = (this.body.velocity.x < 0);  // Flip sprite based on horizontal movement
+        
         const speed = 4;
         //const speed = 25; //for zooming around the map to test
         let playerVelocity = new Phaser.Math.Vector2();
