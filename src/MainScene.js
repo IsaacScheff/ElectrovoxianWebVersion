@@ -13,6 +13,8 @@ import HarvesterSpawner from "./HarvesterSpawner.js";
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super("MainScene");
+        this.gamePaused = false;
+        this.pauseMenu;
     }
 
     preload() {
@@ -39,10 +41,14 @@ export default class MainScene extends Phaser.Scene {
         const mapHeight = 2048; 
         this.matter.world.setBounds(0, 0, mapWidth, mapHeight);
 
+        this.input.keyboard.on('keydown-P', () => {
+            this.pauseGame();
+        });
+
         this.redTeam = [];
         this.blueTeam = [];
 
-        this.player = new Player({ scene:this, x:1920, y:128, texture:'electrovoxPlayerRed' });
+        this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovoxPlayerRed' });
         this.redTeam.push(this.player);
         this.player.scaleX = 2;
         this.player.scaleY = 2;
@@ -125,6 +131,9 @@ export default class MainScene extends Phaser.Scene {
     }
 
     update(time, delta) {
+        if(this.gamePaused) {
+            return;
+        }
         this.player.update(time, delta);
         this.redTeamBarrels.update(time, delta);
         this.blueTeamBarrels.update(time, delta);
@@ -155,4 +164,40 @@ export default class MainScene extends Phaser.Scene {
             turret.update(time, delta);
         });
     }
+    pauseGame() {
+        this.gamePaused = !this.gamePaused;  // Toggle the pause state
+        if (this.gamePaused) {
+            this.matter.world.pause(); // Pause the game's physics
+            this.time.timeScale = 0; 
+            this.showPauseMenu();
+        } else {
+            this.matter.world.resume();
+            this.time.timeScale = 1;
+            this.hidePauseMenu();
+        }
+    }
+    showPauseMenu() {
+        this.pauseMenu = this.add.text(this.cameras.main.scrollX + this.cameras.main.width / 2,
+                                       this.cameras.main.scrollY + this.cameras.main.height / 2, 
+                                       'Game Paused', { 
+                                           font: '24px Arial', 
+                                           fill: '#ffffff',
+                                           stroke: '#000000',
+                                           strokeThickness: 3,
+                                           shadow: {
+                                               offsetX: 2,
+                                               offsetY: 2,
+                                               color: '#000000',
+                                               blur: 0
+                                           }
+                                       })
+            .setOrigin(0.5)
+            .setDepth(1000);
+    }
+    hidePauseMenu() {
+        // Remove the pause menu from the scene
+        if (this.pauseMenu) {
+            this.pauseMenu.destroy();
+        }
+    }    
 }

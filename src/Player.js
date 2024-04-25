@@ -95,7 +95,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.healthBar.fillStyle(0x808080, 1);
         this.healthBar.fillRect(0, 0, 60, 10);
 
-        this.healthBar.fillStyle(0xff0000, 1);
+        this.healthBar.fillStyle(0x00ff00, 1);
         this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
     }
 
