@@ -113,7 +113,6 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
         this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
     }
     die() {
-        console.log("Creep died");
         let index = this.scene.creeps.indexOf(this);
         if (index !== -1) {
             this.scene.creeps.splice(index, 1);  // Remove from array

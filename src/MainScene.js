@@ -1,3 +1,4 @@
+import BioBarrels from "./BioBarrels.js";
 import Bullet from "./Bullet.js";
 import Electrovox from "./Electrovox.js";
 import ElectrovoxSpawner from "./ElectrovoxSpawner.js";
@@ -15,6 +16,7 @@ export default class MainScene extends Phaser.Scene {
     }
 
     preload() {
+        BioBarrels.preload(this);
         Bullet.preload(this);
         Player.preload(this);
         Turret.preload(this);
@@ -48,6 +50,15 @@ export default class MainScene extends Phaser.Scene {
             right: Phaser.Input.Keyboard.KeyCodes.D,
             shoot: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
+
+        this.redTeamBarrels = new BioBarrels({ scene: this, x: 192, y: 1792, texture:'bioBarrels'});
+        this.redTeamBarrels.scaleX = 2;
+        this.redTeamBarrels.scaleY = 2;
+        this.redTeamBarrels.setStatic(true);
+        this.blueTeamBarrels = new BioBarrels({ scene: this, x: 1792, y: 192, texture:'bioBarrels'});
+        this.blueTeamBarrels.scaleX = 2;
+        this.blueTeamBarrels.scaleY = 2;
+        this.blueTeamBarrels.setStatic(true);
 
         this.redTeamTurrets = [];
         this.blueTeamTurrets = [];

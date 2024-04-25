@@ -10,9 +10,9 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
         this.damage = damage;
         this.enemies = enemies;
 
-        //Adding the bullet to the scene
-        //scene.add.existing(this);
         this.setVelocity(direction.x * speed, direction.y * speed);
+
+        scene.add.existing(this); // bullets invisible without this
 
         // Setting up collision events
         this.setOnCollide((pair) => {
@@ -32,9 +32,5 @@ export default class Bullet extends Phaser.Physics.Matter.Sprite {
     }
     static preload(scene) {
         scene.load.image('energyBallRed', 'assets/images/EnergyBallRed.png');
-    }
-
-    destroy() {
-        super.destroy();  // Call the original destroy method
     }
 }
