@@ -44,13 +44,17 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         if(this.inputKeys.left.isDown) {
             playerVelocity.x = -1;
+            this.shootingDirection.set(-1, 0);
         } else if (this.inputKeys.right.isDown) {
             playerVelocity.x = 1;
+            this.shootingDirection.set(1, 0);
         }
         if(this.inputKeys.up.isDown) {
             playerVelocity.y = -1;
+            this.shootingDirection.set(this.shootingDirection.x, -1);
         } else if (this.inputKeys.down.isDown) {
             playerVelocity.y = 1;
+            this.shootingDirection.set(this.shootingDirection.x, 1);
         }
         playerVelocity.normalize();
         playerVelocity.scale(speed);
@@ -58,7 +62,6 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.body.position.x = this.x;
         this.body.position.y = this.y;
 
-    this.shootingDirection.set(playerVelocity.x, playerVelocity.y);
         if (this.inputKeys.shoot.isDown && time > this.lastShotTime + this.shootingCooldown) {
             this.shoot();
             this.lastShotTime = time;
