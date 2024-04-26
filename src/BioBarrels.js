@@ -6,7 +6,7 @@ export default class BioBarrels extends Phaser.Physics.Matter.Sprite {
         this.team = team; // Team association, e.g., 'red' or 'blue'
 
         this.scene.add.existing(this);
-        this.maxHealth = 1000; 
+        this.maxHealth = 100; 
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
@@ -66,7 +66,7 @@ export default class BioBarrels extends Phaser.Physics.Matter.Sprite {
     die() {
         console.log(`${this.team} BioBarrels destroyed. Game ends here`);
         this.healthBar.destroy();
-        this.destroy();
+        this.setAlpha(0);
         this.scene.BioBarrelsDestroyed();
     }
 }

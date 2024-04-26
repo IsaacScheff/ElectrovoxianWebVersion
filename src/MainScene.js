@@ -193,7 +193,7 @@ export default class MainScene extends Phaser.Scene {
         if (this.gamePaused) {
             this.matter.world.pause(); // Pause the game's physics
             this.time.timeScale = 0; 
-            if (message === 'GAME OVER') {
+            if (message.includes('GAME OVER')) {
                 this.setupGameOver();
             }
             this.showPauseMenu(message);
@@ -246,7 +246,7 @@ export default class MainScene extends Phaser.Scene {
         });
     } 
     handlePlayerDeath() {
-        this.pauseGame('GAME OVER');
+        this.pauseGame("GAME OVER\nPlayer defeated");
     }  
     healPlayer() {
         this.player.takeDamage(-20);
@@ -290,6 +290,10 @@ export default class MainScene extends Phaser.Scene {
         this.player.setTexture('electrovoxPlayerBlue');
     }
     BioBarrelsDestroyed(){
-        if()
+        if(this.redBioEnergyCollected && this.blueBioEnergyCollected){
+            this.scene.start('GameWonScene'); 
+        } else {
+            this.pauseGame('GAME OVER\nBarrels destroyed before sap retrieved');
+        }
     }
 }
