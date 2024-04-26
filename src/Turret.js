@@ -90,6 +90,12 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.healthBar.destroy();
         this.destroy();  // Phaser's method to remove the sprite
     }
+    flashRed() {
+        this.setTint(0xff0000); // Set tint to red
+        this.scene.time.delayedCall(100, () => { // Delay before clearing the tint
+            this.clearTint(); // Clear tint to return to normal color
+        }, [], this);
+    }
 }
 
 

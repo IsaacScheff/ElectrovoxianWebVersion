@@ -136,4 +136,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     die(){
         this.scene.handlePlayerDeath();
     }
+    
+    flashRed() {
+        this.setTint(0xff0000); // Set tint to red
+        this.scene.time.delayedCall(100, () => { // Delay before clearing the tint
+            this.clearTint(); // Clear tint to return to normal color
+        }, [], this);
+    }
 }

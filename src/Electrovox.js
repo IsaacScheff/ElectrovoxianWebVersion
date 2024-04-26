@@ -147,5 +147,11 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
             this.setAlpha(1.0);  // Set opacity to 100%
         }
     }
+    flashRed() {
+        this.setTint(0xff0000); // Set tint to red
+        this.scene.time.delayedCall(100, () => { // Delay before clearing the tint
+            this.clearTint(); // Clear tint to return to normal color
+        }, [], this);
+    }
     
 }

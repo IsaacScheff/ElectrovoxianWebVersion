@@ -69,4 +69,10 @@ export default class BioBarrels extends Phaser.Physics.Matter.Sprite {
         this.setAlpha(0);
         this.scene.BioBarrelsDestroyed();
     }
+    flashRed() {
+        this.setTint(0xff0000); // Set tint to red
+        this.scene.time.delayedCall(100, () => { // Delay before clearing the tint
+            this.clearTint(); // Clear tint to return to normal color
+        }, [], this);
+    }
 }

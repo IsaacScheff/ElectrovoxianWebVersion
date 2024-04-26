@@ -24,6 +24,7 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
         this.attackRange = 85; // melee attacker so needs to be close
         this.attackCooldown = 1000; // Cooldown in milliseconds
         this.lastAttackTime = 0; 
+        this.attackDamage = 20;
 
         this.chasingTarget = false; 
     }
@@ -92,7 +93,8 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
     }
     attack(target, time) {
         if (time > this.lastAttackTime + this.attackCooldown) {
-            target.takeDamage(20); // Implement takeDamage on the target class
+            target.flashRed();
+            target.takeDamage(this.attackDamage); 
             this.lastAttackTime = time;
         }
     }
@@ -132,5 +134,11 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
             this.isHidden = false;
             this.setAlpha(1.0);  // Set opacity to 100%
         }
+    }
+    flashRed() {
+        this.setTint(0xff0000); // Set tint to red
+        this.scene.time.delayedCall(100, () => { // Delay before clearing the tint
+            this.clearTint(); // Clear tint to return to normal color
+        }, [], this);
     }
 }

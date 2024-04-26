@@ -86,6 +86,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
     }
 
     attack(enemy) {
+        enemy.flashRed();
         enemy.takeDamage(this.attackDamage);
     }
 
@@ -144,6 +145,12 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
     hide(hideStatus) {
         this.isHidden = hideStatus;
         this.setAlpha(hideStatus ? 0.5 : 1.0);
+    }
+    flashRed() {
+        this.setTint(0xff0000); // Set tint to red
+        this.scene.time.delayedCall(100, () => { // Delay before clearing the tint
+            this.clearTint(); // Clear tint to return to normal color
+        }, [], this);
     }
 }
 
