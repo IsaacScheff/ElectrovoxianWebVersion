@@ -7,7 +7,7 @@ export default class HarvesterSpawner {
         this.respawnTimer = 20000; // 20 seconds
         this.activeHarvesters = [];
         this.redTeamSpawns = [
-            {x: 64, y: 1568, waypoints: [ {x:64, y:208}, {x: 464, y: 128}, {x: 954, y: 128}, {x:1504, y: 128}], role: "toplane"}, 
+            {x: 128, y: 1568, waypoints: [ {x:128, y:208}, {x: 464, y: 128}, {x: 954, y: 128}, {x:1504, y: 128}], role: "toplane"}, 
             {x: 320, y: 1600, waypoints: [{x: 1024, y: 1024},{ x: 1564, y: 432 }, { x: 1364, y: 632 }, { x: 1164, y: 832 }], role: "midlane"}, 
             {x: 416, y: 2016, waypoints: [{x: 1984, y: 2016}, { x: 1920, y: 544 }, { x: 1920, y: 1084 }, { x: 1920, y: 1584 }], role: "botlane"},
             {x: 384, y: 1728, 
@@ -46,7 +46,7 @@ export default class HarvesterSpawner {
 
     spawnBoth(){
         this.spawnHarvesters('red');
-        this.spawnHarvesters('blue');
+        //this.spawnHarvesters('blue');
     }
 
     spawnHarvesters(team) { 

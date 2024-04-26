@@ -8,7 +8,7 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.team = team;
         this.enemies = [];
 
-        this.maxHealth = 1000;
+        this.maxHealth = 300; 
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
@@ -22,7 +22,7 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.cooldownPeriod = 3000; // cooldown in milliseconds
         this.lastDetectionTime = 0; // timestamp of last detection
         this.bulletSpeed = 5;
-        this.bulletDamage = 30; 
+        this.bulletDamage = 70; 
         this.bulletLifetime = 500;
 
         this.isHidden = false; //needed for enemies to shoot them

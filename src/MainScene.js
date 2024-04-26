@@ -35,6 +35,11 @@ export default class MainScene extends Phaser.Scene {
     }
 
     create() {
+        this.gamePaused = false;
+        this.techScrapCollected = 0;
+        this.redBioEnergyCollected = false;
+        this.blueBioEnergyCollected = false;
+
         const map = this.make.tilemap({ key: 'map' });
         this.map = map;
         const tileset = map.addTilesetImage('RPG Nature Tileset', 'tiles', 32, 32);
@@ -53,6 +58,7 @@ export default class MainScene extends Phaser.Scene {
         this.blueTeam = [];
 
         this.player = new Player({ scene:this, x:128, y:1920, texture:'electrovoxPlayerRed' });
+        //this.player = new Player({ scene:this, x:1920, y:128, texture:'electrovoxPlayerRed' });
         this.redTeam.push(this.player);
         this.player.scaleX = 2;
         this.player.scaleY = 2;
@@ -82,12 +88,12 @@ export default class MainScene extends Phaser.Scene {
         this.redTeamTurrets = [];
         this.blueTeamTurrets = [];
         const redTeamTurretPositions = [ 
-            { x: 128, y: 1504 },
-            { x: 128, y: 964 },
-            { x: 128, y: 464 },
-            { x: 544, y: 1900 },
-            { x: 1084, y: 1900 },
-            { x: 1584, y: 1900 },
+            { x: 64, y: 1504 },
+            { x: 64, y: 964 },
+            { x: 64, y: 464 },
+            { x: 544, y: 1964 },
+            { x: 1084, y: 1964 },
+            { x: 1584, y: 1964 },
             { x: 448, y: 1536 },
             { x: 648, y: 1336 },
             { x: 848, y: 1136 }

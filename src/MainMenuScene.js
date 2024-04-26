@@ -25,7 +25,7 @@ export default class MainMenuScene extends Phaser.Scene {
         // Create the "Play Game" button
         this.playButton = this.add.sprite(280, 340, 'playButton').setInteractive();
         this.playButton.on('pointerup', () => {
-            this.scene.start('MainScene');
+            this.scene.start('MainScene', { startFresh: true });
         });
 
         // Create the "Instructions" button

@@ -15,7 +15,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
         this.currentWaypointIndex = 0;
         this.moveSpeed = 2;
 
-        this.maxHealth = 50;
+        this.maxHealth = 300;
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
@@ -25,7 +25,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
         this.shootingCooldown = 1500; // Cooldown in milliseconds
         this.lastShotTime = 0;
         this.bulletSpeed = 8;
-        this.bulletDamage = 20;
+        this.bulletDamage = 35;
         this.bulletLifetime = 500;
 
         this.isHidden = false;

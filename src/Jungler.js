@@ -15,7 +15,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
                         mask: CollisionCategories.DEFAULT
                     }
 
-        this.maxHealth = 500;
+        this.maxHealth = 400;
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
@@ -23,7 +23,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
 
         this.senseRange = 220;
         this.attackRange = 96;
-        this.attackDamage = 30;
+        this.attackDamage = 40;
         this.attackingCooldown = 500;
         this.lastAttackTime = 0;
 
