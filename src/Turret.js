@@ -84,7 +84,6 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         super.destroy();
     }
     die() {
-        console.log("Turret destroyed.");
         let teamArray = (this.team === 'red' ? this.scene.redTeamTurrets : this.scene.blueTeamTurrets);
         let teamIndex = teamArray.indexOf(this);
         if (teamIndex !== -1) {

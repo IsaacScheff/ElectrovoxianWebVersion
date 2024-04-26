@@ -64,7 +64,6 @@ export default class BioBarrels extends Phaser.Physics.Matter.Sprite {
     }
 
     die() {
-        console.log(`${this.team} BioBarrels destroyed. Game ends here`);
         this.healthBar.destroy();
         this.setAlpha(0);
         this.scene.BioBarrelsDestroyed();

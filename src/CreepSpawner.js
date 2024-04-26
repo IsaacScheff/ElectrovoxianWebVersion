@@ -46,7 +46,7 @@ export default class CreepSpawner {
             this.respawnTimer, 
             this.spawnCreepAt.bind(this, creepIndex), // Binding 'this' and passing 'creepIndex' directly
             [], // No additional arguments are needed here since they're bound
-            this // Context is specified, though technically redundant now
+            this 
         );
     }
 }

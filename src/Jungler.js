@@ -33,7 +33,6 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
 
     static preload(scene) {
         scene.load.image('gravithor', 'assets/images/Gravithor.png');
-        scene.load.audio('gravithorAttack', 'assets/audio/GravithorAttack.mp3');
         scene.load.audio('gravithorHurt', 'assets/audio/GravithorHurt.mp3');
     }
 
