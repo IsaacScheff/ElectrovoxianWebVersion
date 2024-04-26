@@ -12,6 +12,29 @@ export default class BioBarrels extends Phaser.Physics.Matter.Sprite {
         this.updateHealthBar();
         this.healthBarColor = (this.team === 'red' ? '0xffa500' : "0x189ab4");
 
+        this.scene.matterCollision.addOnCollideStart({
+            objectA: this,
+            objectB: this.scene.player,
+            callback: this.handleCollision,
+            context: this
+        });
+
+    }
+
+    handleCollision({ bodyA, bodyB, gameObjectB }) {
+        if (gameObjectB === this.scene.player) { // Ensure you have a reference to the player in the scene
+            this.collectBioEnergySap();
+        }
+    }
+
+    collectBioEnergySap() {
+        if(this.scene.techScrapCollected < 10) return;
+
+        if(this.team === 'red'){
+            this.scene.redBioEnergyCollected = true;
+        } else if (this.team === 'red') {
+            this.scene.blueBioEnergyCollected = true;
+        }
     }
 
     static preload(scene) {

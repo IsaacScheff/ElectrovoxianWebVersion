@@ -16,6 +16,8 @@ export default class MainScene extends Phaser.Scene {
         super("MainScene");
         this.gamePaused = false;
         this.techScrapCollected = 0;
+        this.redBioEnergyCollected = false;
+        this.blueBioEnergyCollected = true;
     }
 
     preload() {
@@ -137,6 +139,19 @@ export default class MainScene extends Phaser.Scene {
         this.events.on("collectTech", this.collectTech, this);
         this.events.on("joinRedTeam", this.joinRedTeam, this);
         this.events.on("joinBlueTeam", this.joinBlueTeam, this);
+
+        this.techScrapText = this.add.text(this.cameras.main.width - 10, 10, `Tech Scrap Collected: ${this.techScrapCollected}`, { 
+            font: '18px Arial', 
+            fill: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 3,
+            shadow: {
+                offsetX: 2,
+                offsetY: 2,
+                color: '#000000',
+                blur: 0
+            }
+        }).setOrigin(1, 0).setScrollFactor(0).setDepth(100);    
     }
 
     update(time, delta) {
@@ -237,35 +252,37 @@ export default class MainScene extends Phaser.Scene {
         this.player.takeDamage(-20);
     }
     collectTech() {
-        console.log("tech");
         this.techScrapCollected++;
-        console.log(this.techScrapCollected);
-        //need UI element showing how much tech collected
+        if(this.techScrapCollected < 10) {
+            this.techScrapText.setText(`Tech Scrap Collected: ${this.techScrapCollected}`);
+        } else {
+            this.techScrapText.setText("Device Ready");
+        }
     }
     joinRedTeam() {
         if(this.player.team === 'red') return;
 
         this.player.team = 'red';
+
         const index = this.blueTeam.indexOf(this.player);
         if (index !== -1) {
             this.blueTeam.splice(index, 1);
         }
+
         this.redTeam.push(this.player);
         this.player.setTexture('electrovoxPlayerRed');
-        console.log(this.blueTeam, this.redTeam);
     }
     joinBlueTeam(){
         if(this.player.team === 'blue') return;
 
         this.player.team = 'blue';
-        console.log(this.redTeam);
+
         const index = this.redTeam.indexOf(this.player);
-        console.log(index);
         if (index !== -1) {
             this.redTeam.splice(index, 1);
         }
+
         this.blueTeam.push(this.player);
         this.player.setTexture('electrovoxPlayerBlue');
-        console.log(this.blueTeam, this.redTeam);
     }
 }

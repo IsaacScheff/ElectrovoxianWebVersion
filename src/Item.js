@@ -35,8 +35,6 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
     }
 
     collect() {
-        console.log(`Collected an item with effect: ${this.effect}`);
-        // Perform effect based on the type of item
         this.scene.events.emit(this.effect);
         this.destroy();
     }
