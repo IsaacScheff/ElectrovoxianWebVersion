@@ -97,6 +97,9 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     takeDamage(amount) {
         this.currentHealth -= amount;
+        if(this.currentHealth > this.maxHealth){
+            this.currentHealth = this.maxHealth;
+        }
         this.currentHealth = Math.max(0, this.currentHealth);
         this.updateHealthBar();
 

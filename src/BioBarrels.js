@@ -32,9 +32,10 @@ export default class BioBarrels extends Phaser.Physics.Matter.Sprite {
 
         if(this.team === 'red'){
             this.scene.redBioEnergyCollected = true;
-        } else if (this.team === 'red') {
+        } else if (this.team === 'blue') {
             this.scene.blueBioEnergyCollected = true;
         }
+        this.scene.events.emit("collectTech");
     }
 
     static preload(scene) {

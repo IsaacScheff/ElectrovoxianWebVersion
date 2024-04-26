@@ -17,7 +17,7 @@ export default class MainScene extends Phaser.Scene {
         this.gamePaused = false;
         this.techScrapCollected = 0;
         this.redBioEnergyCollected = false;
-        this.blueBioEnergyCollected = true;
+        this.blueBioEnergyCollected = false;
     }
 
     preload() {
@@ -255,8 +255,12 @@ export default class MainScene extends Phaser.Scene {
         this.techScrapCollected++;
         if(this.techScrapCollected < 10) {
             this.techScrapText.setText(`Tech Scrap Collected: ${this.techScrapCollected}`);
+        } else if (!this.blueBioEnergyCollected || !this.redBioEnergyCollected){
+            this.techScrapText.setText(
+                `Device Ready\n${this.redBioEnergyCollected ? "Red Team Sap Collected" : "Collect Sap from Red Team"}\n${this.blueBioEnergyCollected ? "Blue Team Sap Collected" : "Collect Sap from Blue Team"}`
+            );
         } else {
-            this.techScrapText.setText("Device Ready");
+            this.techScrapText.setText("End the conflict\nDestroy either set of barrels");
         }
     }
     joinRedTeam() {
