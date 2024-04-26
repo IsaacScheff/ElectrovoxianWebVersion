@@ -67,14 +67,14 @@ export default class MainScene extends Phaser.Scene {
         this.player.scaleX = 2;
         this.player.scaleY = 2;
         this.player.inputKeys = this.input.keyboard.addKeys({
-            up: Phaser.Input.Keyboard.KeyCodes.W,
-            down: Phaser.Input.Keyboard.KeyCodes.S,
-            left: Phaser.Input.Keyboard.KeyCodes.A,
-            right: Phaser.Input.Keyboard.KeyCodes.D,
-            arrowLeft: Phaser.Input.Keyboard.KeyCodes.LEFT,
-            arrowRight: Phaser.Input.Keyboard.KeyCodes.RIGHT,
-            arrowUp: Phaser.Input.Keyboard.KeyCodes.UP,
-            arrowDown: Phaser.Input.Keyboard.KeyCodes.DOWN,
+            arrowUp: Phaser.Input.Keyboard.KeyCodes.W,
+            arrowDown: Phaser.Input.Keyboard.KeyCodes.S,
+            arrowLeft: Phaser.Input.Keyboard.KeyCodes.A,
+            arrowRight: Phaser.Input.Keyboard.KeyCodes.D,
+            left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+            right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
+            up: Phaser.Input.Keyboard.KeyCodes.UP,
+            down: Phaser.Input.Keyboard.KeyCodes.DOWN,
             shoot: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
 
@@ -106,9 +106,9 @@ export default class MainScene extends Phaser.Scene {
             { x: 1920, y: 544 },
             { x: 1920, y: 1084 },
             { x: 1920, y: 1584 },
-            { x: 1504, y: 128 }, 
-            { x: 964, y: 128 }, 
-            { x: 464, y: 128 }, 
+            { x: 1504, y: 64 }, 
+            { x: 964, y: 64 }, 
+            { x: 464, y: 64 }, 
             { x: 1564, y: 432 },
             { x: 1364, y: 632 },
             { x: 1164, y: 832 }

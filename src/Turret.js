@@ -8,7 +8,7 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.team = team;
         this.enemies = [];
 
-        this.maxHealth = 300; 
+        this.maxHealth = 150; 
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();

@@ -10,8 +10,8 @@ export default class ItemSpawner {
             { texture: 'orangeUniform', effect: 'joinRedTeam' },
             { texture: 'blueUniform', effect: 'joinBlueTeam' }
         ];
-        //this.spawnRate = 10000;  // Spawn an item every 10 seconds
-        this.spawnRate = 100;  // turbo testing speeds
+        this.spawnRate = 5000;  // Spawn an item every 5 seconds
+        //this.spawnRate = 100;  // turbo testing speeds
         this.scene.time.addEvent({
             delay: this.spawnRate,
             callback: this.spawnItem,

@@ -7,7 +7,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.setCollisionCategory(CollisionCategories.PLAYER);
         this.setCollidesWith(CollisionCategories.ITEM | CollisionCategories.DEFAULT);
         scene.add.existing(this);
-        this.team = 'red'; //maybe later allow for blue team player
+        this.team = 'red'; 
 
         this.setFixedRotation();
 
@@ -37,8 +37,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     update(time, delta) {
         this.flipX = (this.body.velocity.x < 0);  // Flip sprite based on horizontal movement
         
-        //const speed = 4;
-        const speed = 25; //for zooming around the map to test
+        const speed = 4;
+        //const speed = 25; //for zooming around the map to test
         let playerVelocity = new Phaser.Math.Vector2();
         let direction = new Phaser.Math.Vector2();
 
@@ -122,7 +122,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.updateHealthBar();
 
         if (this.currentHealth <= 0) {
-            //this.die();
+            this.die();
         }
     }
 

@@ -5,7 +5,8 @@ export default class InstructionsScene extends Phaser.Scene {
         this.instructions = `Weave through the chaos using the arrow keys\
                             \naim your blaster with the WASD keys and fire with space bar\
                             \nPick up uniforms of the opposite color to switch teams\
-                            \nand health packs to patch yourself up.`
+                            \nand health packs to patch yourself up.
+                            \n Press 'p' to pause and 'm' to mute.`
         this.goals = `You need to collect 10 pieces of techonological scrap,\
                     \nsyphon some Bio Energy Sap from the barrels guarded by both teams\
                     \nthan aid either team in conquering the other to bring a respite to the fighting.\

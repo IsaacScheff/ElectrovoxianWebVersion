@@ -20,7 +20,7 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
         this.indexOfSpawn = indexOfSpawn;
         this.leashRange = 100; // Range to return to spawn point
 
-        this.senseRange = 160; //can sense and move towards target
+        this.senseRange = 180; //can sense and move towards target
         this.attackRange = 85; // melee attacker so needs to be close
         this.attackCooldown = 1000; // Cooldown in milliseconds
         this.lastAttackTime = 0; 
