@@ -39,6 +39,7 @@ export default class MainScene extends Phaser.Scene {
         this.techScrapCollected = 0;
         this.redBioEnergyCollected = false;
         this.blueBioEnergyCollected = false;
+        this.time.timeScale = 1;
 
         const map = this.make.tilemap({ key: 'map' });
         this.map = map;
@@ -325,4 +326,7 @@ export default class MainScene extends Phaser.Scene {
     toggleMute() {
         this.sound.mute = !this.sound.mute;
     }
+    shutdown() {
+        this.time.removeAllEvents();  
+    }    
 }

@@ -72,6 +72,7 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
 
         this.healthBar.fillStyle(this.healthBarColor, 1);
         this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
+        this.healthBar.setDepth(1000);
     }
     
     static preload(scene) {

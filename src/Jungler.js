@@ -123,6 +123,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
         this.healthBar.fillRect(0, 0, 60, 10);
         this.healthBar.fillStyle(this.healthBarColor, 1);
         this.healthBar.fillRect(0, 0, 60 * (this.currentHealth / this.maxHealth), 10);
+        this.healthBar.setDepth(1000);
     }
 
     die() {

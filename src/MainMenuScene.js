@@ -6,10 +6,6 @@ export default class MainMenuScene extends Phaser.Scene {
     }
 
     preload() {
-        // this.load.image('playButton', 'assets/images/PlayGameButton.png');
-        // this.load.image('optionsButton', 'assets/images/OptionsButton.png');
-        // this.load.image('instructionsButton', 'assets/images/InstructionsButton.png');
-        // this.load.image('creditsButton', 'assets/images/CreditsButton.png');
         this.load.image('mainMenuBackground', 'assets/images/FFMainMenuArt.png');
         this.load.image('logo', 'assets/images/FFLogo.png');
     }
@@ -39,6 +35,7 @@ export default class MainMenuScene extends Phaser.Scene {
         };
 
         createButton(this.cameras.main.centerX, 340, 'Play Game', () => {
+            this.scene.restart('MainScene');
             this.scene.start('MainScene', { startFresh: true });
         });
         createButton(this.cameras.main.centerX, 410, 'Instructions', () => {
@@ -51,28 +48,5 @@ export default class MainMenuScene extends Phaser.Scene {
             this.scene.start('CreditsScene');
         });
 
-        // // Create the "Play Game" button
-        // this.playButton = this.add.sprite(280, 340, 'playButton').setInteractive();
-        // this.playButton.on('pointerup', () => {
-        //     this.scene.start('MainScene', { startFresh: true });
-        // });
-
-        // // Create the "Instructions" button
-        // this.instructionsButton = this.add.sprite(500, 340, 'instructionsButton').setInteractive();
-        // this.instructionsButton.on('pointerdown', () => {
-        //     this.scene.start('InstructionsScene');
-        // });
-
-        // // Create the "Options" button
-        // this.optionsButton = this.add.sprite(280, 450, 'optionsButton').setInteractive();
-        // this.optionsButton.on('pointerdown', () => {
-        //     this.scene.start('OptionsScene');
-        // });
-
-        // // Create the "Credits" button
-        // this.creditsButton = this.add.sprite(500, 450, 'creditsButton').setInteractive();
-        // this.creditsButton.on('pointerdown', () => {
-        //     this.scene.start('CreditsScene');
-        // });
     }
 }
