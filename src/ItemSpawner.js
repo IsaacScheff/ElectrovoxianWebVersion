@@ -1,9 +1,17 @@
+import Item from "./Item";
 export default class ItemSpawner {
-    constructor(scene, itemDetails) {
+    constructor(scene) {
         this.scene = scene;
-        this.itemDetails = itemDetails;
-        this.spawnRate = 20000;  // Spawn an item every 20 seconds
-        this.timer = this.scene.time.addEvent({
+        this.itemDetails = [
+            { texture: 'techScrap', effect: 'collectTech' },
+            { texture: 'techScrap', effect: 'collectTech' },
+            { texture: 'techScrap', effect: 'collectTech' },
+            { texture: 'healthPack', effect: 'heal' },
+            { texture: 'orangeUniform', effect: 'switchTeamRed' },
+            { texture: 'blueUniform', effect: 'switchTeamBlue' }
+        ];
+        this.spawnRate = 10000;  // Spawn an item every 10 seconds
+        this.scene.time.addEvent({
             delay: this.spawnRate,
             callback: this.spawnItem,
             callbackScope: this,
@@ -12,10 +20,11 @@ export default class ItemSpawner {
     }
 
     spawnItem() {
-        const detail = Phaser.Utils.Array.GetRandom(this.itemDetails);
-        const x = Phaser.Math.Between(400, 1648);  
-        const y = Phaser.Math.Between(400, 1648);
+        let details = Phaser.Utils.Array.GetRandom(this.itemDetails);
+        details.x = Phaser.Math.Between(384, 1696);  
+        details.y = Phaser.Math.Between(384, 1696);
+        details.scene = this.scene;
 
-        new Item(this.scene, x, y, detail.texture, detail.effect);
+        new Item(details);
     }
 }

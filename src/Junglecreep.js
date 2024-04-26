@@ -1,3 +1,4 @@
+import CollisionCategories from "./CollisionCategories";
 export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
 
     constructor(data) {

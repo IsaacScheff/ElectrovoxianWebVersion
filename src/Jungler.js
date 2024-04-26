@@ -1,8 +1,13 @@
+import CollisionCategories from "./CollisionCategories";
 export default class Jungler extends Phaser.Physics.Matter.Sprite {
 
     constructor(data) {
         let { scene, x, y, texture, team, waypoints, role } = data;
         super(scene.matter.world, x, y, texture);
+        this.collisionFilter = {
+            category: CollisionCategories.NPC,
+            mask: CollisionCategories.DEFAULT
+        }
         this.team = team;
         this.scene.add.existing(this);
         this.waypoints = waypoints;

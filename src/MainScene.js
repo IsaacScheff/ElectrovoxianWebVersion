@@ -9,12 +9,12 @@ import Jungler from "./Jungler.js";
 import CreepSpawner from "./CreepSpawner.js";
 import Laner from "./Laner.js";
 import HarvesterSpawner from "./HarvesterSpawner.js";
-
+import Item from "./Item.js";
+import ItemSpawner from "./ItemSpawner.js";
 export default class MainScene extends Phaser.Scene {
     constructor() {
         super("MainScene");
         this.gamePaused = false;
-        //this.pauseMenu;
     }
 
     preload() {
@@ -26,6 +26,7 @@ export default class MainScene extends Phaser.Scene {
         JungleCreep.preload(this);
         Jungler.preload(this);
         Laner.preload(this);
+        Item.preload(this);
         this.load.image('tiles', 'assets/images/RPG Nature Tileset.png');
         this.load.tilemapTiledJSON('map', 'assets/images/map.json');
     }
@@ -124,6 +125,8 @@ export default class MainScene extends Phaser.Scene {
         this.creeps = [];
         this.creepSpawner = new CreepSpawner(this);
         this.creepSpawner.spawnCreeps();
+
+        this.itemSpawner = new ItemSpawner(this);
         
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.1, 0.1);
@@ -163,18 +166,6 @@ export default class MainScene extends Phaser.Scene {
         this.blueTeamTurrets.forEach(turret => {
             turret.update(time, delta);
         });
-    }
-    pauseGame() {
-        this.gamePaused = !this.gamePaused;  // Toggle the pause state
-        if (this.gamePaused) {
-            this.matter.world.pause(); // Pause the game's physics
-            this.time.timeScale = 0; 
-            this.showPauseMenu();
-        } else {
-            this.matter.world.resume();
-            this.time.timeScale = 1;
-            this.hidePauseMenu();
-        }
     }
     pauseGame(message = 'Game Paused') {
         this.gamePaused = !this.gamePaused;  // Toggle the pause state

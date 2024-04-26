@@ -1,9 +1,14 @@
 import Bullet from "./Bullet";
+import CollisionCategories from "./CollisionCategories";
 export default class Laner extends Phaser.Physics.Matter.Sprite {
 
     constructor(data) {
         let { scene, x, y, texture, team, waypoints } = data;
         super(scene.matter.world, x, y, texture);
+        this.collisionFilter = {
+            category: CollisionCategories.NPC,
+            mask: CollisionCategories.DEFAULT
+        }
         this.team = team;
         this.scene.add.existing(this);
         this.waypoints = waypoints;

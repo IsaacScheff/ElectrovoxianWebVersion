@@ -1,19 +1,14 @@
 import Bullet from "./Bullet";
+import CollisionCategories from "./CollisionCategories";
 export default class Player extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let { scene, x, y, texture } = data;
         super(scene.matter.world, x, y, texture);
-        this.scene.add.existing(this);
+        this.setCollisionCategory(CollisionCategories.PLAYER);
+        this.setCollidesWith(CollisionCategories.ITEM | CollisionCategories.DEFAULTd);
+        scene.add.existing(this);
         this.team = 'red'; //maybe later allow for blue team player
 
-        const { Body, Bodies } = Phaser.Physics.Matter.Matter;
-        var playerCollider = Bodies.circle(this.x, this.y, 16, { isSensor: false, label: 'playerCollider' });
-        var playerSensor = Bodies.circle(this.x, this.y, 16, { isSensor: true, label: 'playerSensor' });
-        const compoundBody = Body.create({
-            parts: [ playerCollider, playerSensor ],
-            frictionAir: 0.35,
-        });
-        this.setExistingBody(compoundBody);
         this.setFixedRotation();
 
         this.shootingDirection = new Phaser.Math.Vector2(0, 0); // Default direction
@@ -105,7 +100,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.updateHealthBar();
 
         if (this.currentHealth <= 0) {
-            this.die();
+            //this.die();
         }
     }
 
