@@ -43,7 +43,7 @@ export default class MainMenuScene extends Phaser.Scene {
         // Create the "Credits" button
         this.creditsButton = this.add.sprite(500, 450, 'creditsButton').setInteractive();
         this.creditsButton.on('pointerup', () => {
-            console.log('Show Credits');
+            this.scene.start('CreditsScene');
         });
     }
 }

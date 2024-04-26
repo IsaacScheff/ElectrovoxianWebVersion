@@ -240,19 +240,20 @@ export default class MainScene extends Phaser.Scene {
         }
     } 
     setupGameOver() {
-        this.add.text(this.cameras.main.scrollX + this.cameras.main.width / 2,
+        this.returnText = this.add.text(this.cameras.main.scrollX + this.cameras.main.width / 2,
                       this.cameras.main.scrollY + this.cameras.main.height / 2 + 40, 
-                      'Press any key to return to Menu', { 
+                      'Click here to return to Menu', { 
                           font: '20px Arial', 
                           fill: '#fff',
                           stroke: '#000',
                           strokeThickness: 3
                       })
             .setOrigin(0.5)
-            .setDepth(1000);
+            .setDepth(1000)
+            .setInteractive();
     
-        this.input.keyboard.once('keydown', () => {
-            this.scene.start('MainMenuScene'); 
+        this.returnText.on('pointerdown', () => {
+            this.scene.start('MainMenuScene');
         });
     } 
     handlePlayerDeath() {
