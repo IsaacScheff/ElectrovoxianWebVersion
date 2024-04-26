@@ -1,32 +1,34 @@
 import CollisionCategories from "./CollisionCategories";
-export default class Jungler extends Phaser.Physics.Matter.Sprite {
 
+export default class Jungler extends Phaser.Physics.Matter.Sprite {
     constructor(data) {
         let { scene, x, y, texture, team, waypoints, role } = data;
         super(scene.matter.world, x, y, texture);
-        this.collisionFilter = {
-            category: CollisionCategories.NPC,
-            mask: CollisionCategories.DEFAULT
-        }
         this.team = team;
         this.scene.add.existing(this);
         this.waypoints = waypoints;
         this.currentWaypointIndex = 0;
         this.moveSpeed = 2;
         this.role = role;
+        this.collisionFilter = {
+                        category: CollisionCategories.NPC,
+                        mask: CollisionCategories.DEFAULT
+                    }
 
         this.maxHealth = 500;
         this.currentHealth = this.maxHealth;
         this.healthBar = this.scene.add.graphics();
         this.updateHealthBar();
-        this.healthBarColor = (this.team === 'red' ? '0xffa500' : "0x189ab4");
+        this.healthBarColor = (this.team === 'red' ? 0xffa500 : 0x189ab4);
 
-        this.attackRange = 96; // melee
-        this.attackingCooldown = 500; // Cooldown in milliseconds
+        this.senseRange = 220;
+        this.attackRange = 96;
+        this.attackDamage = 30;
+        this.attackingCooldown = 500;
         this.lastAttackTime = 0;
 
         this.isHidden = false;
-        this.enemies = [];
+        this.chasingTarget = false;
     }
 
     static preload(scene) {
@@ -41,7 +43,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
         if (!this.detectAndAttack(time)) {
             if (this.waypoints && this.waypoints.length > 0) {
                 let target = this.waypoints[this.currentWaypointIndex];
-                let reached = this.moveTo(target);
+                let reached = this.moveTo(target.x, target.y);
 
                 if (reached) {
                     this.currentWaypointIndex = Math.floor(Math.random() * this.waypoints.length); // Select a random waypoint index
@@ -60,48 +62,45 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
     }
 
     detectAndAttack(currentTime) {
-        let enemies = (this.team === 'red') ? 
-                  this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : 
-                  this.scene.redTeam.concat(this.scene.redTeamTurrets);
-        
+        let enemies = (this.team === 'red') ? this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : this.scene.redTeam.concat(this.scene.redTeamTurrets);
         enemies = enemies.concat(this.scene.creeps);
         let enemyDetected = false;
         for (let enemy of enemies) {
-            if (
-                enemy.active && 
-                Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y) <= this.attackRange &&
-                (enemy.isHidden === false || (enemy.isHidden === true && this.isHidden === true))
-                ) {
+            if (enemy.active && Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y) <= this.senseRange) {
                 enemyDetected = true;
-                if (currentTime > this.lastAttackTime + this.attackingCooldown) {
+                if (Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y) <= this.attackRange && currentTime > this.lastAttackTime + this.attackingCooldown) {
                     this.attack(enemy);
                     this.lastAttackTime = currentTime;
+                } else {
+                    this.moveTo(enemy.x, enemy.y);
                 }
+                break;  // Stop at the first enemy detected within range
             }
         }
-
-        if (enemyDetected) {
-            this.setVelocity(0, 0);
-            return true;
+        if (!enemyDetected && this.chasingTarget) {
+            this.moveTo(this.spawnX, this.spawnY); 
+            this.chasingTarget = false;
         }
-        return false;
+
+        return enemyDetected;
     }
 
     attack(enemy) {
-        enemy.takeDamage(20);
+        enemy.takeDamage(this.attackDamage);
     }
 
-    moveTo(target) {
-        let dx = target.x - this.x;
-        let dy = target.y - this.y;
-        let angle = Math.atan2(dy, dx);
-        this.setVelocity(Math.cos(angle) * this.moveSpeed, Math.sin(angle) * this.moveSpeed);
-
-        if (Phaser.Math.Distance.Between(this.x, this.y, target.x, target.y) < 10) {
-            this.setVelocity(0, 0);
+    moveTo(targetX, targetY) {
+        let dx = targetX - this.x;
+        let dy = targetY - this.y;
+        let distance = Phaser.Math.Distance.Between(this.x, this.y, targetX, targetY);
+        if (distance < 10) {
+            this.setVelocity(0, 0); // Stop moving if close enough
             return true;
+        } else {
+            let angle = Math.atan2(dy, dx);
+            this.setVelocity(Math.cos(angle) * this.moveSpeed, Math.sin(angle) * this.moveSpeed);
+            return false;
         }
-        return false;
     }
 
     takeDamage(amount) {
@@ -109,11 +108,11 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
         if (this.currentHealth <= 0) {
             this.die();
         }
+        this.updateHealthBar();
     }
 
     updateHealthBar() {
-        if (!this.active) return;
-
+        if (!this.active) return;  // Skip updating the health bar if not active
         this.healthBar.clear();
         this.healthBar.setPosition(this.x - 30, this.y - 40);
         this.healthBar.fillStyle(0x808080, 1);
@@ -143,13 +142,8 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
     }
 
     hide(hideStatus) {
-        if (hideStatus) {
-            this.isHidden = true;
-            this.setAlpha(0.5);
-        } else {
-            this.isHidden = false;
-            this.setAlpha(1.0);
-        }
+        this.isHidden = hideStatus;
+        this.setAlpha(hideStatus ? 0.5 : 1.0);
     }
 }
 

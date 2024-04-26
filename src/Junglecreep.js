@@ -64,7 +64,6 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
         }
     }
     findClosestTarget() {
-        // Example to find the closest player or NPC Harvester - adjust according to your game logic
         let targets = this.scene.redHarvesters.concat(this.scene.blueHarvesters); 
         targets.push(this.scene.player);
         let closest = null;
