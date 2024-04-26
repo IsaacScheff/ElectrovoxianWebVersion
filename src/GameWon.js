@@ -26,7 +26,7 @@ export default class GameWonScene extends Phaser.Scene {
             }
         }).setOrigin(0.5); 
 
-        this.add.text(this.scale.width / 2, this.scale.height * 0.75, 'Press any key to return to Menu', {
+        let returnText = this.add.text(this.scale.width / 2, this.scale.height * 0.75, 'Click here to return to Menu', {
             font: '24px Arial',
             fill: '#ffffff',
             stroke: '#000000',
@@ -38,11 +38,10 @@ export default class GameWonScene extends Phaser.Scene {
                 blur: 2,
                 fill: true
             }
-        }).setOrigin(0.5); 
+        }).setOrigin(0.5).setInteractive(); 
 
-        //press any key to return to menu
-        this.input.keyboard.once('keydown', () => {
-            this.scene.start('MainMenuScene'); 
+        returnText.on('pointerdown', () => {
+            this.scene.start('MainMenuScene');
         });
     }
 }
