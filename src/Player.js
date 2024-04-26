@@ -39,26 +39,41 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         const speed = 4;
         //const speed = 25; //for zooming around the map to test
         let playerVelocity = new Phaser.Math.Vector2();
+        let direction = new Phaser.Math.Vector2();
 
+        // Movement Controls
         if(this.inputKeys.left.isDown) {
             playerVelocity.x = -1;
-            this.shootingDirection.set(-1, 0);
         } else if (this.inputKeys.right.isDown) {
             playerVelocity.x = 1;
-            this.shootingDirection.set(1, 0);
         }
         if(this.inputKeys.up.isDown) {
             playerVelocity.y = -1;
-            this.shootingDirection.set(this.shootingDirection.x, -1);
         } else if (this.inputKeys.down.isDown) {
             playerVelocity.y = 1;
-            this.shootingDirection.set(this.shootingDirection.x, 1);
         }
+
+        // Shooting Direction Controls
+        if (this.inputKeys.arrowLeft.isDown) {
+            direction.x = -1;
+        } else if (this.inputKeys.arrowRight.isDown) {
+            direction.x = 1;
+        }
+        if (this.inputKeys.arrowUp.isDown) {
+            direction.y = -1;
+        } else if (this.inputKeys.arrowDown.isDown) {
+            direction.y = 1;
+        }
+
         playerVelocity.normalize();
         playerVelocity.scale(speed);
         this.setVelocity(playerVelocity.x, playerVelocity.y);
         this.body.position.x = this.x;
         this.body.position.y = this.y;
+
+        if (direction.length() > 0) {
+            this.shootingDirection = direction.normalize();
+        }
 
         if (this.inputKeys.shoot.isDown && time > this.lastShotTime + this.shootingCooldown) {
             this.shoot();
