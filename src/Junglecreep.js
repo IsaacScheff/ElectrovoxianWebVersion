@@ -30,6 +30,8 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
     }
     static preload(scene) {
         scene.load.image('thermalBeetle', 'assets/images/ThermalBeetle.png');
+        scene.load.audio('beetleAttack', 'assets/audio/BeetleAttack.mp3');
+        scene.load.audio('beetleHurt', 'assets/audio/BeetleHurt.mp3');
     }
     update(time, delta) {
         if (!this.active) return;  // Skip updating if not active
@@ -94,12 +96,14 @@ export default class JungleCreep extends Phaser.Physics.Matter.Sprite {
     attack(target, time) {
         if (time > this.lastAttackTime + this.attackCooldown) {
             target.flashRed();
+            this.scene.playSoundIfClose('beetleAttack', this.x, this.y);
             target.takeDamage(this.attackDamage); 
             this.lastAttackTime = time;
         }
     }
     takeDamage(amount) { 
         if (!this.active) return;  // Skip if already destroyed
+        this.scene.playSoundIfClose('beetleHurt', this.x, this.y);
         this.currentHealth -= amount;
         if (this.currentHealth <= 0) {
             this.die();

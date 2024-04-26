@@ -25,7 +25,7 @@ const config = {
             }
         ]
     },
-    scene: [MainMenuScene, MainScene, GameWonScene]
+    scene: [GameWonScene, MainMenuScene, MainScene]
 };
 
 new Phaser.Game(config);

@@ -46,6 +46,7 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.updateHealthBar();
     }
     fire(target) {
+        this.scene.playSoundIfClose('turretShot', this.x, this.y);
         const direction = new Phaser.Math.Vector2(target.x - this.x, target.y - this.y).normalize();
         let enemies = this.team === 'red' ? this.scene.blueTeam : this.scene.redTeam; // Enemies list for bullet interaction
 
@@ -75,9 +76,12 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
     
     static preload(scene) {
         scene.load.image('turret', 'assets/images/FFTurret.png');
+        scene.load.audio('turretDestroyed', 'assets/audio/TurretDestroyed.mp3');
+        scene.load.audio('turretShot', 'assets/audio/TurretShot.mp3');
     }
 
     destroy() {
+        this.scene.playSoundIfClose('turretDestroyed', this.x, this.y);
         super.destroy();
     }
     die() {

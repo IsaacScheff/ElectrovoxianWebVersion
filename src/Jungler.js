@@ -33,6 +33,8 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
 
     static preload(scene) {
         scene.load.image('gravithor', 'assets/images/Gravithor.png');
+        scene.load.audio('gravithorAttack', 'assets/audio/GravithorAttack.mp3');
+        scene.load.audio('gravithorHurt', 'assets/audio/GravithorHurt.mp3');
     }
 
     update(time, delta) {
@@ -86,6 +88,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
     }
 
     attack(enemy) {
+        //this.scene.playSoundIfClose('gravithorAttack', this.x, this.y); //this was kinda obnxious tbh
         enemy.flashRed();
         enemy.takeDamage(this.attackDamage);
     }
@@ -105,6 +108,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
     }
 
     takeDamage(amount) {
+        this.scene.playSoundIfClose('gravithorHurt', this.x, this.y);
         this.currentHealth -= amount;
         if (this.currentHealth <= 0) {
             this.die();

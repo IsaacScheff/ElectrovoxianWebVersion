@@ -11,7 +11,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
         this.setFixedRotation();
 
-        this.shootingDirection = new Phaser.Math.Vector2(0, 0); // Default direction
+        this.shootingDirection = new Phaser.Math.Vector2(1, 0); // Default direction
         this.bulletSpeed = 10;
         this.shootingCooldown = 500;
         this.bulletLifetime = 350;
@@ -31,6 +31,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     static preload(scene) {
         scene.load.image('electrovoxPlayerRed', 'assets/images/ElectrovoxPlayerRed.png');
         scene.load.image('electrovoxPlayerBlue', 'assets/images/ElectrovoxPlayerBlue.png');
+        scene.load.audio('playerHurt', 'assets/audio/PlayerHurt.mp3');
     }
 
     update(time, delta) {
@@ -92,6 +93,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     shoot() {
         if (this.shootingDirection.lengthSq() > 0) {
+            this.scene.playSoundIfClose('electrovoxShot', this.x, this.y);
             let direction = this.shootingDirection.normalize();
             let enemies = (this.team === 'red' ? this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : this.scene.redTeam.concat(this.scene.redTeamTurrets));
             enemies = enemies.concat(this.scene.creeps);
@@ -111,6 +113,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     takeDamage(amount) {
+        this.scene.playSoundIfClose('playerHurt', this.x, this.y);
         this.currentHealth -= amount;
         if(this.currentHealth > this.maxHealth){
             this.currentHealth = this.maxHealth;

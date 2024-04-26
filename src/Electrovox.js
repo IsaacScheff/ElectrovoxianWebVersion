@@ -34,6 +34,8 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
     static preload(scene) {
         scene.load.image('electrovoxRedTeam', 'assets/images/ElectrovoxRedTeam.png');
         scene.load.image('electrovoxBlueTeam', 'assets/images/ElectrovoxBlueTeam.png');
+        scene.load.audio('electrovoxShot', 'assets/audio/ElectrovoxShot.mp3'); //the "shot" naming convention not my brightest work tbh
+        scene.load.audio('electrovoxHurt', 'assets/audio/ElectrovoxHurt.mp3');
     }
     update(time, delta) {
         if (!this.active) return;  // Skip updating if not active
@@ -89,6 +91,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
     }
     shootAt(enemy, enemies) {
         const direction = new Phaser.Math.Vector2(enemy.x - this.x, enemy.y - this.y).normalize();
+        this.scene.playSoundIfClose('electrovoxShot', this.x, this.y);
         const offsetX = this.x + direction.x * 64;
         const offsetY = this.y + direction.y * 64;
         new Bullet(this.scene, offsetX, offsetY, 'energyBallRed', direction, this.bulletSpeed, this.bulletDamage, enemies, this.bulletLifetime);
@@ -108,6 +111,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
     }
     takeDamage(amount) { 
         if (!this.active) return;  // Skip if already destroyed
+        this.scene.playSoundIfClose('electrovoxHurt', this.x, this.y);
         this.currentHealth -= amount;
         if (this.currentHealth <= 0) {
             this.die();

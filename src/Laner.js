@@ -34,6 +34,8 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
 
     static preload(scene) {
         scene.load.image('quantumSentinel', 'assets/images/QuantumSentinel.png');
+        scene.load.audio('quantumHurt', 'assets/audio/QuantumSentinelHurt.mp3');
+        scene.load.audio('quantumShot', 'assets/audio/QuantumSentinelShot.mp3');
     }
 
     update(time, delta) {
@@ -89,6 +91,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
     }
 
     shootAt(enemy, enemies) {
+        this.scene.playSoundIfClose('quantumShot', this.x, this.y);
         const direction = new Phaser.Math.Vector2(enemy.x - this.x, enemy.y - this.y).normalize();
         const offsetX = this.x + direction.x * 64;
         const offsetY = this.y + direction.y * 64;
@@ -109,6 +112,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
     }
 
     takeDamage(amount) {
+        this.scene.playSoundIfClose('quantumHurt', this.x, this.y);
         this.currentHealth -= amount;
         if (this.currentHealth <= 0) {
             this.die();

@@ -300,4 +300,14 @@ export default class MainScene extends Phaser.Scene {
             this.pauseGame('GAME OVER\nBarrels destroyed before sap retrieved');
         }
     }
+    playSoundIfClose(soundKey, sourceX, sourceY, maxDistance = 500) {
+        const distance = Phaser.Math.Distance.Between(
+            this.player.x, this.player.y,
+            sourceX, sourceY
+        );
+    
+        if (distance <= maxDistance) {
+            this.sound.play(soundKey);
+        }
+    }
 }
