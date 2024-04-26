@@ -289,4 +289,7 @@ export default class MainScene extends Phaser.Scene {
         this.blueTeam.push(this.player);
         this.player.setTexture('electrovoxPlayerBlue');
     }
+    BioBarrelsDestroyed(){
+        if()
+    }
 }

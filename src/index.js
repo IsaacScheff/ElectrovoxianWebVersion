@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import PhaserMatterCollisionPlugin from 'phaser-matter-collision-plugin';
 import MainScene from './MainScene';
 import MainMenuScene from './MainMenuScene';
+import GameWonScene from './GameWon';
 
 const config = {
     type: Phaser.AUTO,
@@ -24,7 +25,7 @@ const config = {
             }
         ]
     },
-    scene: [MainMenuScene, MainScene]
+    scene: [MainMenuScene, MainScene, GameWonScene]
 };
 
 new Phaser.Game(config);
