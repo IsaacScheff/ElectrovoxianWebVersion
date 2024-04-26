@@ -29,6 +29,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         this.bulletLifetime = 500;
 
         this.isHidden = false;
+        this.enemies = [];
     }
     static preload(scene) {
         scene.load.image('electrovoxRedTeam', 'assets/images/ElectrovoxRedTeam.png');
@@ -36,6 +37,9 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
     }
     update(time, delta) {
         if (!this.active) return;  // Skip updating if not active
+
+        this.enemies = (this.team === 'red') ? this.scene.blueTeam.concat(this.scene.blueTeamTurrets) 
+                                                : this.scene.redTeam.concat(this.scene.redTeamTurrets);
 
         this.flipX = (this.body.velocity.x < 0);  // Flip sprite based on horizontal movement
 
@@ -60,13 +64,9 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         }
     }
     detectAndShoot(currentTime) {
-        const enemies = (this.team === 'red') ? 
-                  this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : 
-                  this.scene.redTeam.concat(this.scene.redTeamTurrets);
-        
         let enemyDetected = false;  // Flag to check if any enemy is detected
     
-        for (let enemy of enemies) {
+        for (let enemy of this.enemies) {
             if (
                 enemy.active && 
                 Phaser.Math.Distance.Between(this.x, this.y, enemy.x, enemy.y) <= this.attackRange &&
@@ -74,7 +74,7 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
                 ) {
                 enemyDetected = true;  // Enemy is detected within range
                 if (currentTime > this.lastShotTime + this.shootingCooldown) {
-                    this.shootAt(enemy, enemies);  // Perform shooting
+                    this.shootAt(enemy, this.enemies);  // Perform shooting
                     this.lastShotTime = currentTime;  // Update last shot time
                     //console.log(`Electrovox from ${this.team} shooting at enemy!`);
                 }
@@ -87,9 +87,6 @@ export default class Electrovox extends Phaser.Physics.Matter.Sprite {
         }
         return false;  // No enemy was detected or no action taken
     }
-    // shootAt(enemy) {
-    //     enemy.takeDamage(20);  // Adjust damage as needed
-    // }
     shootAt(enemy, enemies) {
         const direction = new Phaser.Math.Vector2(enemy.x - this.x, enemy.y - this.y).normalize();
         const offsetX = this.x + direction.x * 64;

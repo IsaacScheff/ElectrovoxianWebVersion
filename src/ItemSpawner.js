@@ -7,10 +7,11 @@ export default class ItemSpawner {
             { texture: 'techScrap', effect: 'collectTech' },
             { texture: 'techScrap', effect: 'collectTech' },
             { texture: 'healthPack', effect: 'heal' },
-            { texture: 'orangeUniform', effect: 'switchTeamRed' },
-            { texture: 'blueUniform', effect: 'switchTeamBlue' }
+            { texture: 'orangeUniform', effect: 'joinRedTeam' },
+            { texture: 'blueUniform', effect: 'joinBlueTeam' }
         ];
-        this.spawnRate = 10000;  // Spawn an item every 10 seconds
+        //this.spawnRate = 10000;  // Spawn an item every 10 seconds
+        this.spawnRate = 100;  // turbo testing speeds
         this.scene.time.addEvent({
             delay: this.spawnRate,
             callback: this.spawnItem,

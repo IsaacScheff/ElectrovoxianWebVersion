@@ -5,7 +5,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         let { scene, x, y, texture } = data;
         super(scene.matter.world, x, y, texture);
         this.setCollisionCategory(CollisionCategories.PLAYER);
-        this.setCollidesWith(CollisionCategories.ITEM | CollisionCategories.DEFAULTd);
+        this.setCollidesWith(CollisionCategories.ITEM | CollisionCategories.DEFAULT);
         scene.add.existing(this);
         this.team = 'red'; //maybe later allow for blue team player
 
@@ -30,6 +30,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
 
     static preload(scene) {
         scene.load.image('electrovoxPlayerRed', 'assets/images/ElectrovoxPlayerRed.png');
+        scene.load.image('electrovoxPlayerBlue', 'assets/images/ElectrovoxPlayerBlue.png');
     }
 
     update(time, delta) {

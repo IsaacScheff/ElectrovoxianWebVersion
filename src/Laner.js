@@ -29,6 +29,7 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
         this.bulletLifetime = 500;
 
         this.isHidden = false;
+        this.enemies = [];
     }
 
     static preload(scene) {
@@ -61,10 +62,10 @@ export default class Laner extends Phaser.Physics.Matter.Sprite {
     }
 
     detectAndShoot(currentTime) {
-        const enemies = (this.team === 'red') ? 
+        let enemies = (this.team === 'red') ? 
                   this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : 
                   this.scene.redTeam.concat(this.scene.redTeamTurrets);
-        
+         
         let enemyDetected = false;
         for (let enemy of enemies) {
             if (

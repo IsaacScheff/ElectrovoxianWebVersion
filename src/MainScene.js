@@ -15,6 +15,7 @@ export default class MainScene extends Phaser.Scene {
     constructor() {
         super("MainScene");
         this.gamePaused = false;
+        this.techScrapCollected = 0;
     }
 
     preload() {
@@ -131,6 +132,11 @@ export default class MainScene extends Phaser.Scene {
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.1, 0.1);
         this.cameras.main.setBounds(0, 0, 2048, 2048);
+
+        this.events.on("heal", this.healPlayer, this);
+        this.events.on("collectTech", this.collectTech, this);
+        this.events.on("joinRedTeam", this.joinRedTeam, this);
+        this.events.on("joinBlueTeam", this.joinBlueTeam, this);
     }
 
     update(time, delta) {
@@ -227,4 +233,39 @@ export default class MainScene extends Phaser.Scene {
     handlePlayerDeath() {
         this.pauseGame('GAME OVER');
     }  
+    healPlayer() {
+        this.player.takeDamage(-20);
+    }
+    collectTech() {
+        console.log("tech");
+        this.techScrapCollected++;
+        console.log(this.techScrapCollected);
+        //need UI element showing how much tech collected
+    }
+    joinRedTeam() {
+        if(this.player.team === 'red') return;
+
+        this.player.team = 'red';
+        const index = this.blueTeam.indexOf(this.player);
+        if (index !== -1) {
+            this.blueTeam.splice(index, 1);
+        }
+        this.redTeam.push(this.player);
+        this.player.setTexture('electrovoxPlayerRed');
+        console.log(this.blueTeam, this.redTeam);
+    }
+    joinBlueTeam(){
+        if(this.player.team === 'blue') return;
+
+        this.player.team = 'blue';
+        console.log(this.redTeam);
+        const index = this.redTeam.indexOf(this.player);
+        console.log(index);
+        if (index !== -1) {
+            this.redTeam.splice(index, 1);
+        }
+        this.blueTeam.push(this.player);
+        this.player.setTexture('electrovoxPlayerBlue');
+        console.log(this.blueTeam, this.redTeam);
+    }
 }

@@ -33,10 +33,9 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
         this.enemies = (this.team === 'red') ? this.scene.blueTeam : this.scene.redTeam;
         // Check if cooldown has elapsed
         if (time > this.lastFireTime + this.cooldownPeriod) {
-            this.enemies.forEach(enemy => { // Assuming you have a list of enemies
+            this.enemies.forEach(enemy => { 
                 if (enemy.active && Phaser.Geom.Circle.ContainsPoint(this.detectionArea, enemy)) {
                     if (enemy.team !== this.team) {
-                        //enemy.takeDamage(30); // Deal damage or whatever effect you want
                         this.fire(enemy);
                         this.lastFireTime = time;
                         return; // Exit after the first target is engaged

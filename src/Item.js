@@ -11,15 +11,13 @@ export default class Item extends Phaser.Physics.Matter.Sprite {
         this.scene.add.existing(this);
 
         this.scene.matterCollision.addOnCollideStart({
-            // objectA: this,
-            // callback: this.handleCollision,
-            // context: this
             objectA: this,
             objectB: this.scene.player,
             callback: this.handleCollision,
             context: this
-
         });
+        this.scaleX = 0.75;
+        this.scaleY = 0.75;
     }
 
     handleCollision({ bodyA, bodyB, gameObjectB }) {

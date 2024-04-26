@@ -26,6 +26,7 @@ export default class Jungler extends Phaser.Physics.Matter.Sprite {
         this.lastAttackTime = 0;
 
         this.isHidden = false;
+        this.enemies = [];
     }
 
     static preload(scene) {
