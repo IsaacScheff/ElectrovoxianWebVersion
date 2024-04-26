@@ -9,8 +9,6 @@ export default class GameWonScene extends Phaser.Scene {
 
     create() {
         let bg = this.add.image(0, 0, 'background').setOrigin(0, 0);
-
-        // Optionally scale or resize the background to cover the full game size
         bg.displayWidth = this.sys.game.config.width;
         bg.displayHeight = this.sys.game.config.height;
         
@@ -26,7 +24,7 @@ export default class GameWonScene extends Phaser.Scene {
                 blur: 2,
                 fill: true
             }
-        }).setOrigin(0.5); // Center the text
+        }).setOrigin(0.5); 
 
         this.add.text(this.scale.width / 2, this.scale.height * 0.75, 'Press any key to return to Menu', {
             font: '24px Arial',
@@ -40,7 +38,7 @@ export default class GameWonScene extends Phaser.Scene {
                 blur: 2,
                 fill: true
             }
-        }).setOrigin(0.5); // Center the text
+        }).setOrigin(0.5); 
 
         //press any key to return to menu
         this.input.keyboard.once('keydown', () => {

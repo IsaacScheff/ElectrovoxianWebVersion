@@ -81,7 +81,6 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
     }
 
     destroy() {
-        this.scene.playSoundIfClose('turretDestroyed', this.x, this.y);
         super.destroy();
     }
     die() {
@@ -92,6 +91,7 @@ export default class Turret extends Phaser.Physics.Matter.Sprite {
             teamArray.splice(teamIndex, 1);
         }
         this.healthBar.destroy();
+        this.scene.playSoundIfClose('turretDestroyed', this.x, this.y);
         this.destroy();  // Phaser's method to remove the sprite
     }
     flashRed() {
