@@ -4,6 +4,8 @@ import MainScene from './MainScene';
 import MainMenuScene from './MainMenuScene';
 import GameWonScene from './GameWon';
 import CreditsScene from './CreditsScene';
+import OptionsScene from './OptionsScene';
+import InstructionsScene from './InstructionsScene';
 
 const config = {
     type: Phaser.AUTO,
@@ -26,7 +28,7 @@ const config = {
             }
         ]
     },
-    scene: [MainMenuScene, MainScene, CreditsScene, GameWonScene]
+    scene: [MainMenuScene, MainScene, CreditsScene, OptionsScene, InstructionsScene, GameWonScene]
 };
 
 new Phaser.Game(config);

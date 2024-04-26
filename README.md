@@ -7,4 +7,4 @@ All sound effects sourced on [Pixabay](https://pixabay.com/service/license-summa
 Images either made in [Asesprite](https://www.aseprite.org/) of with [OpenAI](https://openai.com/)
 
 Play as a rogue minion in a MOBA battle as you avoid the NPC Harvesters fighting over mining the natural resources from your home planet they use to power their alien machines. 
-Run, hide, and fight to ultimately survive as the chaos brews around you. 
+Run, hide, and fight to ultimately escape as the chaos brews around you. 

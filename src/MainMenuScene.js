@@ -1,3 +1,5 @@
+import InstructionsScene from "./InstructionsScene";
+
 export default class MainMenuScene extends Phaser.Scene {
     constructor() {
         super({ key: 'MainMenuScene' });
@@ -30,19 +32,19 @@ export default class MainMenuScene extends Phaser.Scene {
 
         // Create the "Instructions" button
         this.instructionsButton = this.add.sprite(500, 340, 'instructionsButton').setInteractive();
-        this.instructionsButton.on('pointerup', () => {
-            console.log('Open Instructions');
+        this.instructionsButton.on('pointerdown', () => {
+            this.scene.start('InstructionsScene');
         });
 
         // Create the "Options" button
         this.optionsButton = this.add.sprite(280, 450, 'optionsButton').setInteractive();
-        this.optionsButton.on('pointerup', () => {
-            console.log('Open Options');
+        this.optionsButton.on('pointerdown', () => {
+            this.scene.start('OptionsScene');
         });
 
         // Create the "Credits" button
         this.creditsButton = this.add.sprite(500, 450, 'creditsButton').setInteractive();
-        this.creditsButton.on('pointerup', () => {
+        this.creditsButton.on('pointerdown', () => {
             this.scene.start('CreditsScene');
         });
     }

@@ -1,14 +1,11 @@
-export default class CreditsScene extends Phaser.Scene {
+export default class OptionsScene extends Phaser.Scene {
     constructor() {
-        super({ key: 'CreditsScene' });
-
-        this.creditText = "Ground tiles made by Stealthix\nAll sound effects sourced on Pixabay\nImages either made in Aseprite or with OpenAI"
-        this.creditText += "\n\nCheck out the full source code at\nhttps://github.com/IsaacScheff/FragileFortunes";
+        super({ key: 'OptionsScene' });
     }
 
     create() {
-        this.add.text(this.scale.width / 2, this.scale.height * 0.25, this.creditText, {
-            font: '24px Arial',
+        this.add.text(this.scale.width / 2, this.scale.height * 0.25, "Yes, some options would be nice.", {
+            font: '36px Arial',
             fill: '#ffffff',
             stroke: '#000000',
             strokeThickness: 6,
