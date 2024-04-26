@@ -54,6 +54,10 @@ export default class MainScene extends Phaser.Scene {
             this.pauseGame();
         });
 
+        this.input.keyboard.on('keydown-M', () => {
+            this.toggleMute();
+        });
+
         this.redTeam = [];
         this.blueTeam = [];
 
@@ -317,5 +321,8 @@ export default class MainScene extends Phaser.Scene {
         if (distance <= maxDistance) {
             this.sound.play(soundKey);
         }
+    }
+    toggleMute() {
+        this.sound.mute = !this.sound.mute;
     }
 }
