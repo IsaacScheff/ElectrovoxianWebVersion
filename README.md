@@ -1,4 +1,7 @@
-Phaser.js game being developed for [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024)
+[Play it on Itch.io](https://isaacwolf.itch.io/fragile-fortunes)
+
+Phaser.js game developed for [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024)
+[Submission Page](https://itch.io/jam/gamedevjs-2024/rate/2670579)
 
 Ground tiles made by [Stealthix](https://stealthix.itch.io/rpg-nature-tileset)
 
