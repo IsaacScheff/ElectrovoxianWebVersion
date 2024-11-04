@@ -26,6 +26,17 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         this.updateHealthBar();
 
         this.isHidden = false;
+        scene.input.on('pointerdown', this.handleMouseClick, this);
+    }
+
+    handleMouseClick(pointer) {
+        const now = this.scene.time.now;
+        if (now > this.lastShotTime + this.shootingCooldown) {
+            // Calculate direction to the mouse pointer
+            this.shootingDirection.set(pointer.worldX - this.x, pointer.worldY - this.y).normalize();
+            this.shoot();
+            this.lastShotTime = now;
+        }
     }
 
     static preload(scene) {
@@ -94,7 +105,7 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     shoot() {
         if (this.shootingDirection.lengthSq() > 0) {
             this.scene.playSoundIfClose('electrovoxShot', this.x, this.y);
-            let direction = this.shootingDirection.normalize();
+            let direction = this.shootingDirection.clone();
             let enemies = (this.team === 'red' ? this.scene.blueTeam.concat(this.scene.blueTeamTurrets) : this.scene.redTeam.concat(this.scene.redTeamTurrets));
             enemies = enemies.concat(this.scene.creeps);
             new Bullet(this.scene, this.x + direction.x * 30, this.y + direction.y * 30, 'energyBallRed', direction, this.bulletSpeed, this.damage, enemies, this.bulletLifetime);
